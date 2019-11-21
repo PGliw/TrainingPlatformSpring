@@ -1,13 +1,21 @@
-package pl.pchorosc.training.platform
+package pl.pchorosc.training.platform.data
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import javafx.fxml.FXMLLoader
+import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.UpdateTimestamp
 import org.springframework.data.jpa.repository.Temporal
 import java.sql.Date
+import java.time.LocalDateTime
 import javax.persistence.*
 
+/**
+ * Entity represents databese entity
+ */
 @Entity
 @Table(name = "trainers")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Trainer(
         @Id
         @GeneratedValue(generator = "uuid2")
@@ -20,7 +28,11 @@ data class Trainer(
         //@Temporal(TemporalType.DATE)
         var birthDate: String,
         var pricePerHour: Float,
-        var description: String = ""
+        var description: String = "",
+        @CreationTimestamp
+        var created: java.util.Date = java.util.Date(),
+        @UpdateTimestamp
+        var modified: java.util.Date = java.util.Date()
 ){
         /**
          * Hibernate tries creates a bean via reflection.

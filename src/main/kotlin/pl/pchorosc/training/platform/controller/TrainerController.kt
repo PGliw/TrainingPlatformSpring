@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
-import pl.pchorosc.training.platform.Trainer
+import pl.pchorosc.training.platform.data.Trainer
+import pl.pchorosc.training.platform.data.TrainerDTO
 import pl.pchorosc.training.platform.service.TrainerService
-import java.sql.Date
-import java.util.UUID
 
 @RestController
 @RequestMapping("/trainers")
@@ -20,22 +19,22 @@ class TrainerController {
     @GetMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun getTraineres() : Iterable<Trainer> = service.getTrainers()
+    fun getTraineres() : Iterable<TrainerDTO> = service.getTrainers()
 
     @PutMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun insertTrainer(
-            @RequestBody trainer: Trainer
-    ) : Trainer = service.insertTrainer(trainer)
+            @RequestBody trainerDto: TrainerDTO
+    ) : Trainer = service.insertTrainer(trainerDto)
 
     @PostMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun updateTrainer(
-            @RequestBody trainer: Trainer
-    ) = service.updateTrainer(trainer)
+            @RequestBody trainerDto: TrainerDTO
+    ) = service.updateTrainer(trainerDto)
 
 }
