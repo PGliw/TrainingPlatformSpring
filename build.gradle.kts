@@ -21,6 +21,8 @@ configurations {
 
 repositories {
 	mavenCentral()
+	// Only Spring RELEASE versions are published to Maven Central Repository, milestones are in milestone repo
+	maven {  setUrl("https://repo.spring.io/milestone") }
 }
 
 dependencies {
@@ -30,6 +32,13 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-gcp-dependencies
+	implementation("org.springframework.cloud:spring-cloud-gcp-dependencies:1.0.0.RC1")
+
+	// Google CloudSQL MySQL
+	implementation("org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.0.0.M2")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
