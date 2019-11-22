@@ -57,4 +57,8 @@ class TrainerService {
         val updatedTrainer = repository.save(trainer)
         return TrainerDTO(updatedTrainer)
     }
+
+    fun getRegisteredLaterThan(date: Date): Iterable<TrainerDTO> = repository.findRegisteredLaterThan(date.time).map { TrainerDTO(it) }
+
+    fun findByLastName(lastName: String) : Iterable<TrainerDTO> = repository.findByLastName(lastName).map { TrainerDTO(it) }
 }

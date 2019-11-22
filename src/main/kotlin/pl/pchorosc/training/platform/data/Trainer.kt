@@ -16,6 +16,10 @@ import javax.persistence.*
 @Entity
 @Table(name = "trainers")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NamedQuery(
+        name = "Trainer.findByLastName",
+        query = "SELECT t FROM Trainer t WHERE t.lastName LIKE ?1"
+)
 data class Trainer(
         @Id
         @GeneratedValue(generator = "uuid2")

@@ -37,4 +37,17 @@ class TrainerController {
             @RequestBody trainerDto: TrainerDTO
     ) = service.updateTrainer(trainerDto)
 
+    fun getTrainersRegisteredLaterThan(
+            @RequestBody payload: TrainerRegisteredLaterThanRequest
+    ): Iterable<TrainerDTO> = service.getRegisteredLaterThan(payload.date)
+
+    @PostMapping(
+            value = ["/by_last_name"],
+            produces = [MediaType.APPLICATION_JSON_VALUE],
+            consumes = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun getTrainersWithNameLike(
+            @RequestBody payload: TrainerFindByLastNameRequest
+    ) = service.findByLastName(payload.name)
+
 }
