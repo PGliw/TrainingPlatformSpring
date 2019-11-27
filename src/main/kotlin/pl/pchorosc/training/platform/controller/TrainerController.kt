@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.Trainer
 import pl.pchorosc.training.platform.data.TrainerDTO
 import pl.pchorosc.training.platform.service.TrainerService
+import org.springframework.web.server.ResponseStatusException
+import org.springframework.http.HttpStatus
 
 @RestController
 @RequestMapping("/trainers")
@@ -49,5 +51,18 @@ class TrainerController {
     fun getTrainersWithNameLike(
             @RequestBody payload: TrainerFindByLastNameRequest
     ) = service.findByLastName(payload.name)
+
+    @DeleteMapping(
+            produces = [MediaType.APPLICATION_JSON_VALUE],
+            consumes = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun deleteTrainerById(@RequestBody payload: TrainerDeleteByIdRequest) : TrainerDTO {
+        try {
+         return service.deleteTrainer(payload.id)
+        }
+        catch(e : IllegalArgumentException){
+            throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
+    }
 
 }

@@ -61,4 +61,10 @@ class TrainerService {
     fun getRegisteredLaterThan(date: Date): Iterable<TrainerDTO> = repository.findRegisteredLaterThan(date.time).map { TrainerDTO(it) }
 
     fun findByLastName(lastName: String) : Iterable<TrainerDTO> = repository.findByLastName(lastName).map { TrainerDTO(it) }
+
+    fun deleteTrainer(trainerId : String) : TrainerDTO {
+            val trainer = repository.findById(trainerId).get()
+            repository.deleteById(trainer.id)
+            return TrainerDTO(trainer)
+    }
 }
