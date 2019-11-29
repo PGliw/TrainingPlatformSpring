@@ -23,6 +23,18 @@ class TrainerController {
     )
     fun getTraineres() : Iterable<TrainerDTO> = service.getTrainers()
 
+   @GetMapping(
+            value = ["/{id}"],
+            produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun getTrainer(@PathVariable id : String) : TrainerDTO =
+        try {
+            service.getTrainer(id)
+        }
+        catch (e: NoSuchElementException) {
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
+
     @PostMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
