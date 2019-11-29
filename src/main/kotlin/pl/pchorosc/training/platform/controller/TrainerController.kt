@@ -23,6 +23,18 @@ class TrainerController {
     )
     fun getTraineres() : Iterable<TrainerDTO> = service.getTrainers()
 
+   @GetMapping(
+            value = ["/{id}"],
+            produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun getTrainer(@PathVariable id : String) : TrainerDTO =
+        try {
+                service.getTrainer(id)
+        }
+        catch (e: NoSuchElementException) {
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
+
     @PostMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
@@ -35,32 +47,47 @@ class TrainerController {
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun updateTrainer(
-            @RequestBody trainerDto: TrainerDTO
-    ) = service.updateTrainer(trainerDto)
+    fun updateTrainer(@RequestBody trainerDto: TrainerDTO) =
+        try {
+                service.updateTrainer(trainerDto)
+        }
+        catch (e: NoSuchElementException) {
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
 
     fun getTrainersRegisteredLaterThan(
             @RequestBody payload: TrainerRegisteredLaterThanRequest
-    ): Iterable<TrainerDTO> = service.getRegisteredLaterThan(payload.date)
+        ): Iterable<TrainerDTO> =
+        try {
+                service.getRegisteredLaterThan(payload.date)
+        }
+        catch (e: NoSuchElementException) {
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
 
     @GetMapping(
             value = ["/by_last_name"],
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun getTrainersWithNameLike(
-            @RequestBody payload: TrainerFindByLastNameRequest
-    ) = service.findByLastName(payload.name)
+    fun getTrainersWithNameLike(@RequestBody payload: TrainerFindByLastNameRequest) : Iterable<TrainerDTO> =
+        try {
+                service.findByLastName(payload.name)
+        }
+        catch (e: NoSuchElementException) {
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
+        }
 
     @DeleteMapping(
+            value = ["/{id}"],
             produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun deleteTrainerById(@RequestParam(value="id") id: String) : TrainerDTO {
+    fun deleteTrainerById(@PathVariable id: String) : TrainerDTO {
         try {
-         return service.deleteTrainer(id)
+                return service.deleteTrainer(id)
         }
         catch(e : NoSuchElementException){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND)
+                throw ResponseStatusException(HttpStatus.NOT_FOUND)
         }
     }
 

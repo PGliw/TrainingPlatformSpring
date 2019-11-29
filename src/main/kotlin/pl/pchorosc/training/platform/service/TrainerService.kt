@@ -20,6 +20,8 @@ class TrainerService {
      */
     fun getTrainers(): Iterable<TrainerDTO> = repository.findAll().map { trainer -> TrainerDTO(trainer) }
 
+    fun getTrainer(id: String): TrainerDTO = TrainerDTO(repository.findById(id).get())
+
     /**
      * Saves a given entity. Use the returned instance for further operations as
      * the save operation might have changed the entity instance completely.
