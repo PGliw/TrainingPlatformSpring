@@ -23,7 +23,7 @@ class TrainerController {
     )
     fun getTraineres() : Iterable<TrainerDTO> = service.getTrainers()
 
-    @PutMapping(
+    @PostMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
@@ -31,7 +31,7 @@ class TrainerController {
             @RequestBody trainerDto: TrainerDTO
     ) : Trainer = service.insertTrainer(trainerDto)
 
-    @PostMapping(
+    @PutMapping(
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
     )
@@ -43,7 +43,7 @@ class TrainerController {
             @RequestBody payload: TrainerRegisteredLaterThanRequest
     ): Iterable<TrainerDTO> = service.getRegisteredLaterThan(payload.date)
 
-    @PostMapping(
+    @GetMapping(
             value = ["/by_last_name"],
             produces = [MediaType.APPLICATION_JSON_VALUE],
             consumes = [MediaType.APPLICATION_JSON_VALUE]
