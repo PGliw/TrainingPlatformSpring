@@ -53,12 +53,11 @@ class TrainerController {
     ) = service.findByLastName(payload.name)
 
     @DeleteMapping(
-            produces = [MediaType.APPLICATION_JSON_VALUE],
-            consumes = [MediaType.APPLICATION_JSON_VALUE]
+            produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun deleteTrainerById(@RequestBody payload: TrainerDeleteByIdRequest) : TrainerDTO {
+    fun deleteTrainerById(@RequestParam(value="id") id: String) : TrainerDTO {
         try {
-         return service.deleteTrainer(payload.id)
+         return service.deleteTrainer(id)
         }
         catch(e : NoSuchElementException){
             throw ResponseStatusException(HttpStatus.NOT_FOUND)
