@@ -53,9 +53,10 @@ class TrainerController {
     ) = service.findByLastName(payload.name)
 
     @DeleteMapping(
+            value = ["/{id}"],
             produces = [MediaType.APPLICATION_JSON_VALUE]
     )
-    fun deleteTrainerById(@RequestParam(value="id") id: String) : TrainerDTO {
+    fun deleteTrainerById(@PathVariable id: String) : TrainerDTO {
         try {
          return service.deleteTrainer(id)
         }
