@@ -60,7 +60,7 @@ class TrainerController {
         try {
          return service.deleteTrainer(payload.id)
         }
-        catch(e : IllegalArgumentException){
+        catch(e : NoSuchElementException){
             throw ResponseStatusException(HttpStatus.NOT_FOUND)
         }
     }
