@@ -1,14 +1,99 @@
 package pl.pchorosc.training.platform.data
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import javafx.fxml.FXMLLoader
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.UpdateTimestamp
-import org.springframework.data.jpa.repository.Temporal
-import java.sql.Date
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
+
+@Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
+open class User(
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        open var id: Long,
+        @Column(unique = true)
+        open var email: String,
+        open var password: String,
+        open var firstName: String,
+        open var lastName: String,
+        open var phone: String,
+        open var birthday: LocalDate,
+        open var photoUrl: String
+) {
+    constructor() : this(
+            0, "", "", "", "", "", LocalDate.now(), ""
+    )
+}
+
+@Entity
+@Table(name = "trainers2")
+class Trainer2(
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        override var id: Long,
+        @Column(unique = true)
+        override var email: String,
+        override var password: String,
+        override var firstName: String,
+        override var lastName: String,
+        override var phone: String,
+        override var birthday: LocalDate,
+        override var photoUrl: String,
+        var description: String
+) : User(id, email, password, firstName, lastName, phone, birthday, photoUrl) {
+    constructor() : this(
+            0, "", "", "", "", "", LocalDate.now(), "", ""
+    )
+        @OneToMany(mappedBy = "trainer")
+        var trainings = listOf<Training>()
+}
+
+@Entity
+@Table(name = "trainees")
+class Trainee(
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        override var id: Long,
+        @Column(unique = true)
+        override var email: String,
+        override var password: String,
+        override var firstName: String,
+        override var lastName: String,
+        override var phone: String,
+        override var birthday: LocalDate,
+        override var photoUrl: String
+) : User(id, email, password, firstName, lastName, phone, birthday, photoUrl) {
+        constructor() : this(
+                0, "", "", "", "", "", LocalDate.now(), ""
+        )
+}
+
+enum class TrainingStatus{
+        PROPOSED, DENIED, ACCEPTED, IN_PROGRESS, FINISHED, CANCELLED
+}
+
+@Entity
+@Table(name = "trainings")
+class Training(
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        var id: Long,
+        var startDateTime: LocalDateTime,
+        var endDateTime: LocalDateTime,
+        var traineeLimit: Int,
+        @Enumerated(EnumType.STRING)
+        var status: TrainingStatus,
+
+        @ManyToOne
+        var trainer: Trainer2
+){
+
+}
+
 
 /**
  * Entity represents databese entity
@@ -37,18 +122,18 @@ data class Trainer(
         var created: java.util.Date = java.util.Date(),
         @UpdateTimestamp
         var modified: java.util.Date = java.util.Date()
-){
-        /**
-         * Hibernate tries creates a bean via reflection.
-         * It does the object creation by calling the no-arg constructor.
-         * Then it uses the setter methods to set the properties.
-         *
-         * If there is no default constructor, the following excpetion happens:
-         * org.hibernate.InstantiationException: No default constructor for entity...
-         */
-        constructor() : this(
-                "", "", "", "", "", 0f, ""
-        )
+) {
+    /**
+     * Hibernate tries creates a bean via reflection.
+     * It does the object creation by calling the no-arg constructor.
+     * Then it uses the setter methods to set the properties.
+     *
+     * If there is no default constructor, the following excpetion happens:
+     * org.hibernate.InstantiationException: No default constructor for entity...
+     */
+    constructor() : this(
+            "", "", "", "", "", 0f, ""
+    )
 }
 
 
