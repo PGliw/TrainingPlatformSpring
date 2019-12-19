@@ -8,16 +8,19 @@ import javax.persistence.*
 @Table(name = "passes")
 class Pass(
         @Id
+        @GeneratedValue
         var id: Long,
         var name: String,
         var activationDate: LocalDate,
         var expirationDate: LocalDate,
         var frontSidePhotoUrl: String,
         var backSidePhotoUrl: String
-){
+) {
+
+    constructor() : this(0, "", LocalDate.now(), LocalDate.now(), "", "")
 
     @ManyToOne
-    var user : User = User()
+    var user: User = User()
 
     @ManyToMany
     @JoinTable(

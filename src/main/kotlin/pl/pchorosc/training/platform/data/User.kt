@@ -7,7 +7,7 @@ import javax.persistence.*
 @Inheritance(strategy = InheritanceType.JOINED)
 open class User(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue
         open var id: Long,
         @Column(unique = true)
         open var email: String,

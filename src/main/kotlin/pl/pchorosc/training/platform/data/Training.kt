@@ -17,10 +17,19 @@ class Training(
         var endDateTime: LocalDateTime,
         var traineeLimit: Int,
         @Enumerated(EnumType.STRING)
-        var status: TrainingStatus,
-
-        @ManyToOne
-        var trainer: Trainer2
+        var status: TrainingStatus
 ) {
-    constructor() : this(0, LocalDateTime.now(), LocalDateTime.now(), 0, TrainingStatus.PROPOSED, Trainer2())
+    constructor() : this(0, LocalDateTime.now(), LocalDateTime.now(), 0, TrainingStatus.PROPOSED)
+
+    @ManyToOne
+    var trainer = Trainer2()
+
+    @OneToMany(mappedBy = "training")
+    var trainingTrainees = listOf<TraineeTraining>()
+
+    @ManyToOne
+    var centre = Centre()
+
+    @ManyToOne
+    var sport = Sport()
 }

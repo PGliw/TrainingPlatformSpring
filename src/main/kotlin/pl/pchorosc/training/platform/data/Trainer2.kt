@@ -32,4 +32,13 @@ class Trainer2(
 
     @OneToMany(mappedBy = "trainer")
     var offers = listOf<Offer>()
+
+    @OneToMany(mappedBy = "author")
+    var givenOpinions = listOf<OpinionTrainerAboutTrainee>()
+
+    @OneToMany(mappedBy = "subject")
+    var receivedOpinions = listOf<OpinionTraineeAboutTrainer>()
+
+    @ManyToMany(mappedBy = "trainers")
+    var centres = setOf<Centre>()
 }

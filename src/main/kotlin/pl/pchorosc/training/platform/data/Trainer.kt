@@ -9,24 +9,6 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Entity represents databese entity
  */

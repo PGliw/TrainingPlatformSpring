@@ -8,7 +8,7 @@ import javax.persistence.*
 @Table(name = "trainees")
 class Trainee(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue
         override var id: Long,
         @Column(unique = true)
         override var email: String,
@@ -22,4 +22,13 @@ class Trainee(
     constructor() : this(
             0, "", "", "", "", "", LocalDate.now(), ""
     )
+
+    @OneToMany(mappedBy = "author")
+    var givenOpinions = listOf<OpinionTraineeAboutTrainer>()
+
+    @OneToMany(mappedBy = "subject")
+    var receivedOpinions = listOf<OpinionTrainerAboutTrainee>()
+
+    @OneToMany(mappedBy = "trainee")
+    var traineeTrainings = listOf<TraineeTraining>()
 }

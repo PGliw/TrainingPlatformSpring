@@ -21,23 +21,23 @@ data class TrainerDTO(
         var birthDate: String,
         var pricePerHour: Float,
         var description: String = ""
-){
-        var id = ""
-        var created = java.util.Date()
-        var modified = java.util.Date()
+) {
+    var id = ""
+    var created = java.util.Date()
+    var modified = java.util.Date()
 
-        constructor(trainer: Trainer) : this(
-                trainer.firstName,
-                trainer.lastName,
-                trainer.photoUrl,
-                trainer.birthDate,
-                trainer.pricePerHour,
-                trainer.description
-        ){
-                id = trainer.id
-                created = trainer.created
-                modified = trainer.modified
-        }
+    constructor(trainer: Trainer) : this(
+            trainer.firstName,
+            trainer.lastName,
+            trainer.photoUrl,
+            trainer.birthDate,
+            trainer.pricePerHour,
+            trainer.description
+    ) {
+        id = trainer.id
+        created = trainer.created
+        modified = trainer.modified
+    }
 }
 
 
