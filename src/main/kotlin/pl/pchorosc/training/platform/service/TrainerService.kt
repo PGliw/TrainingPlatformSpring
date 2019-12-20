@@ -3,7 +3,7 @@ package pl.pchorosc.training.platform.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.Trainer
-import pl.pchorosc.training.platform.data.TrainerDTO
+import pl.pchorosc.training.platform.data.dto.TrainerDTO
 import pl.pchorosc.training.platform.repository.TrainerRepository
 import java.util.*
 

@@ -6,9 +6,6 @@ import javax.persistence.*
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 open class User(
-        @Id
-        @GeneratedValue
-        open var id: Long,
         @Column(unique = true)
         open var email: String,
         open var password: String,
@@ -19,8 +16,12 @@ open class User(
         open var photoUrl: String
 ) {
     constructor() : this(
-            0, "", "", "", "", "", LocalDate.now(), ""
+            "", "", "", "", "", LocalDate.now(), ""
     )
+
+    @Id
+    @GeneratedValue
+    open var id: Long = 0L
 
     @OneToMany(mappedBy = "user")
     var passes = listOf<Pass>()

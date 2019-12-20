@@ -33,6 +33,9 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation("org.modelmapper:modelmapper:2.3.5")
+
 
 	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-gcp-dependencies
 	// implementation("org.springframework.cloud:spring-cloud-gcp-dependencies:1.0.0.RC1")

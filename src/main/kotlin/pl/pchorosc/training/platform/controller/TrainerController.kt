@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.Trainer
-import pl.pchorosc.training.platform.data.TrainerDTO
+import pl.pchorosc.training.platform.data.dto.TrainerDTO
 import pl.pchorosc.training.platform.service.TrainerService
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.http.HttpStatus
