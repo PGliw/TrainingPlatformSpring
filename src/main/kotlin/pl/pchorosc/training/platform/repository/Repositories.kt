@@ -4,17 +4,17 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import pl.pchorosc.training.platform.data.*
 
-interface TrainerRepository: CrudRepository<Trainer, String>{
+interface TrainerRepository : CrudRepository<Trainer, String> {
 
     @Query("from Trainer t where t.created > ?1")
-    fun findRegisteredLaterThan(date: Long) : Iterable<Trainer>
+    fun findRegisteredLaterThan(date: Long): Iterable<Trainer>
 
     fun findByLastName(lastName: String): Iterable<Trainer>
 }
 
 interface Trainer2Repository : CrudRepository<Trainer2, Long>
 
-interface TraineeTepository : CrudRepository<Trainee, Long>
+interface TraineeRepository : CrudRepository<Trainee, Long>
 
 interface CentreRepository : CrudRepository<Centre, Long>
 

@@ -1,9 +1,11 @@
 package pl.pchorosc.training.platform.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.dto.SportDTO
 import pl.pchorosc.training.platform.data.response.SportResponse
+import pl.pchorosc.training.platform.exceptions.SportNotFoundException
 import pl.pchorosc.training.platform.repository.SportRepository
 import pl.pchorosc.training.platform.utils.toSport
 import pl.pchorosc.training.platform.utils.toSportResponse
@@ -20,5 +22,6 @@ class SportService {
             sportDTO.toSport()
     ).toSportResponse()
 
-    fun getSport(id: Long): SportResponse = repository.findById(id).get().toSportResponse()
+    fun getSport(id: Long): SportResponse =
+            repository.findByIdOrNull(id)?.toSportResponse() ?: throw SportNotFoundException()
 }

@@ -15,13 +15,13 @@ class CentreController {
     @Autowired
     private lateinit var centreService: CentreService
 
-
     @GetMapping
-    fun getCentres(): Iterable<CentreResponse> =
-            centreService.getCenters()
+    fun getCentres(): Iterable<CentreResponse> = centreService.getCenters()
+
+    @GetMapping(value = ["/{id}"])
+    fun getCentreById(@PathVariable id: Long) = centreService.getCentre(id)
 
     @PostMapping
-    fun addCentre(@RequestBody centreDTO: CentreDTO) =
-            centreService.insertCentre(centreDTO)
+    fun addCentre(@RequestBody centreDTO: CentreDTO) = centreService.insertCentre(centreDTO)
 
 }

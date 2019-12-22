@@ -1,20 +1,11 @@
 package pl.pchorosc.training.platform.utils
 
-import pl.pchorosc.training.platform.data.Centre
-import pl.pchorosc.training.platform.data.Offer
-import pl.pchorosc.training.platform.data.Sport
-import pl.pchorosc.training.platform.data.Trainer2
-import pl.pchorosc.training.platform.data.dto.CentreDTO
-import pl.pchorosc.training.platform.data.dto.OfferDTO
-import pl.pchorosc.training.platform.data.dto.SportDTO
-import pl.pchorosc.training.platform.data.dto.Trainer2DTO
-import pl.pchorosc.training.platform.data.response.CentreResponse
-import pl.pchorosc.training.platform.data.response.OfferResponse
-import pl.pchorosc.training.platform.data.response.SportResponse
-import pl.pchorosc.training.platform.data.response.Trainer2Response
+import pl.pchorosc.training.platform.data.*
+import pl.pchorosc.training.platform.data.dto.*
+import pl.pchorosc.training.platform.data.response.*
 import java.time.LocalDate
 
-fun Trainer2.toTrainer2Response() : Trainer2Response {
+fun Trainer2.toTrainer2Response(): Trainer2Response {
     val birthdayStr = birthday.toString()
     return Trainer2Response(
             id = id,
@@ -28,7 +19,7 @@ fun Trainer2.toTrainer2Response() : Trainer2Response {
     )
 }
 
-fun Trainer2DTO.toTrainer2() : Trainer2{
+fun Trainer2DTO.toTrainer2(): Trainer2 {
     val birthday = LocalDate.parse(birthday)
     // TODO encode password
     val encryptedPassword = password
@@ -44,7 +35,36 @@ fun Trainer2DTO.toTrainer2() : Trainer2{
     )
 }
 
-fun Centre.toCentreResponse() : CentreResponse{
+
+fun Trainee.toTraineeResponse(): TraineeResponse {
+    val birthdayStr = birthday.toString()
+    return TraineeResponse(
+            id = id,
+            email = email,
+            firstName = firstName,
+            lastName = lastName,
+            photoUrl = photoUrl,
+            phone = phone,
+            birthday = birthdayStr
+    )
+}
+
+fun TraineeDTO.toTrainee(): Trainee {
+    val birthday = LocalDate.parse(birthday)
+    // TODO encode password
+    val encryptedPassword = password
+    return Trainee(
+            email = email,
+            password = encryptedPassword,
+            firstName = firstName,
+            lastName = lastName,
+            photoUrl = photoUrl,
+            phone = phone,
+            birthday = birthday
+    )
+}
+
+fun Centre.toCentreResponse(): CentreResponse {
     return CentreResponse(
             id = id,
             name = name,
@@ -55,7 +75,7 @@ fun Centre.toCentreResponse() : CentreResponse{
     )
 }
 
-fun CentreDTO.toCentre() : Centre {
+fun CentreDTO.toCentre(): Centre {
     return Centre(
             name = name,
             latitude = latitude,
@@ -79,7 +99,7 @@ fun SportDTO.toSport(): Sport {
     )
 }
 
-fun Offer.toOfferResponse(): OfferResponse{
+fun Offer.toOfferResponse(): OfferResponse {
     return OfferResponse(
             pricePerHour = pricePerHour,
             trainerID = trainer.id,
@@ -87,6 +107,7 @@ fun Offer.toOfferResponse(): OfferResponse{
     )
 }
 
-fun OfferDTO.toOffer(): Offer{
+fun OfferDTO.toOffer(): Offer {
     return Offer(pricePerHour)
 }
+

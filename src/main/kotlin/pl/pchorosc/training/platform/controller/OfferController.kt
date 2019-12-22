@@ -18,6 +18,9 @@ class OfferController {
     @GetMapping
     fun getOffers(): Iterable<OfferResponse> = offerService.getOffers()
 
+    @GetMapping(value = ["/{id}"])
+    fun getOfferById(@PathVariable id: Long) = offerService.getOffer(id)
+
     @PostMapping
     fun addOffer(@RequestBody offerDTO: OfferDTO) = offerService.addOffer(offerDTO)
 }

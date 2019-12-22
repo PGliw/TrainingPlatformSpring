@@ -15,13 +15,13 @@ class Trainer2Controller {
     @Autowired
     private lateinit var trainer2Service: Trainer2Service
 
-
     @GetMapping
-    fun getTrainers(): Iterable<Trainer2Response> =
-            trainer2Service.getTrainers()
+    fun getTrainers(): Iterable<Trainer2Response> = trainer2Service.getTrainers()
+
+    @GetMapping(value = ["/{id}"])
+    fun getTrainerById(@PathVariable id: Long) = trainer2Service.getTrainer(id)
 
     @PostMapping
-    fun addTrainer(@RequestBody trainer2DTO: Trainer2DTO) =
-            trainer2Service.insertTrainer(trainer2DTO)
+    fun addTrainer(@RequestBody trainer2DTO: Trainer2DTO) = trainer2Service.insertTrainer(trainer2DTO)
 
 }

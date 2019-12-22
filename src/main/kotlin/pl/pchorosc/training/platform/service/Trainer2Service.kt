@@ -1,9 +1,11 @@
 package pl.pchorosc.training.platform.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
 import pl.pchorosc.training.platform.data.response.Trainer2Response
+import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
 import pl.pchorosc.training.platform.repository.Trainer2Repository
 import pl.pchorosc.training.platform.utils.toTrainer2
 import pl.pchorosc.training.platform.utils.toTrainer2Response
@@ -20,5 +22,6 @@ class Trainer2Service {
             trainer2DTO.toTrainer2()
     ).toTrainer2Response()
 
-    fun getTrainer(id: Long): Trainer2Response = repository.findById(id).get().toTrainer2Response()
+    fun getTrainer(id: Long): Trainer2Response =
+            repository.findByIdOrNull(id)?.toTrainer2Response() ?: throw TrainerNotFoundException()
 }

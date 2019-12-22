@@ -11,3 +11,16 @@ class TrainerNotFoundException : RuntimeException("No trainer with given ID was 
 @Component
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 class SportNotFoundException : RuntimeException("No sport with given ID was found")
+
+@Component
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class TraineeNotFoundException : RuntimeException("No trainee with given ID was found")
+
+@Component
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class OfferNotFoundException : RuntimeException("No offer with given ID was found")
+
+@Component
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class CentreNotFoundException : RuntimeException("No centre with given ID was found")
+

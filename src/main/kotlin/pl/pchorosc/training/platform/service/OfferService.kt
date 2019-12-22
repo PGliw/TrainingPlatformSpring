@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import pl.pchorosc.training.platform.data.Trainer2
 import pl.pchorosc.training.platform.data.dto.OfferDTO
 import pl.pchorosc.training.platform.data.response.OfferResponse
+import pl.pchorosc.training.platform.exceptions.OfferNotFoundException
 import pl.pchorosc.training.platform.exceptions.SportNotFoundException
 import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
 import pl.pchorosc.training.platform.repository.OfferRepository
@@ -27,8 +27,11 @@ class OfferService {
 
     fun getOffers(): Iterable<OfferResponse> = offerRepository.findAll().map { it.toOfferResponse() }
 
+    fun getOffer(id: Long): OfferResponse =
+            offerRepository.findByIdOrNull(id)?.toOfferResponse() ?: throw OfferNotFoundException()
+
     @Transactional
-    fun addOffer(offerDTO: OfferDTO) : OfferResponse {
+    fun addOffer(offerDTO: OfferDTO): OfferResponse {
         val offer = offerDTO.toOffer()
         val trainer = trainer2Repository.findByIdOrNull(offerDTO.trainerID) ?: throw TrainerNotFoundException()
         val sport = sportRepository.findByIdOrNull(offerDTO.sportID) ?: throw SportNotFoundException()

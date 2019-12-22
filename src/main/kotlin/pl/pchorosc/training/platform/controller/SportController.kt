@@ -18,6 +18,9 @@ class SportController {
     @GetMapping
     fun getSports(): Iterable<SportResponse> = sportService.getSports()
 
+    @GetMapping(value = ["/{id}"])
+    fun getSportById(@PathVariable id: Long) = sportService.getSport(id)
+
     @PostMapping
     fun addSport(@RequestBody sportDTO: SportDTO) = sportService.insertSport(sportDTO)
 }
