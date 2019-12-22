@@ -5,14 +5,15 @@ import javax.persistence.*
 @Entity
 @Table(name = "sports")
 class Sport(
-        @Id
-        @GeneratedValue
-        var id: Long,
         @Column(unique = true)
         var name: String,
         var photoUrl: String
 ) {
-    constructor() : this(0, "", "")
+    constructor() : this("", "")
+
+    @Id
+    @GeneratedValue
+    var id: Long = 0L
 
     @OneToMany(mappedBy = "sport")
     var offers = listOf<Offer>()

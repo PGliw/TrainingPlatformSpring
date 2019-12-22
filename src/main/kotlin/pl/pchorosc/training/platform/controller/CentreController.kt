@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.CentreDTO
-import pl.pchorosc.training.platform.data.dto.Trainer2DTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
 import pl.pchorosc.training.platform.service.CentreService
 

@@ -1,10 +1,13 @@
 package pl.pchorosc.training.platform.utils
 
 import pl.pchorosc.training.platform.data.Centre
+import pl.pchorosc.training.platform.data.Sport
 import pl.pchorosc.training.platform.data.Trainer2
 import pl.pchorosc.training.platform.data.dto.CentreDTO
+import pl.pchorosc.training.platform.data.dto.SportDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
+import pl.pchorosc.training.platform.data.response.SportResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import java.time.LocalDate
 
@@ -54,6 +57,20 @@ fun CentreDTO.toCentre() : Centre {
             name = name,
             latitude = latitude,
             longitude = longitude,
+            photoUrl = photoUrl
+    )
+}
+
+fun Sport.toSportResponse(): SportResponse {
+    return SportResponse(
+            name = name,
+            photoUrl = photoUrl
+    )
+}
+
+fun SportDTO.toSport(): Sport {
+    return Sport(
+            name = name,
             photoUrl = photoUrl
     )
 }

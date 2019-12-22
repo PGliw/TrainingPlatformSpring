@@ -1,13 +1,11 @@
-package pl.pchorosc.training.platform.data.dto
+package pl.pchorosc.training.platform.data.response
 
 /**
  * Data Transfer Object used to transfer via REST API (HTTP)
  */
 
-data class CentreDTO(
+data class SportResponse(
         val name: String,
-        val latitude: Float,
-        val longitude: Float,
         val photoUrl: String
 )
 

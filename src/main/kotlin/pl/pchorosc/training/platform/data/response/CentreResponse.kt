@@ -1,8 +1,5 @@
 package pl.pchorosc.training.platform.data.response
 
-import java.time.LocalDate
-import javax.persistence.*
-
 data class CentreResponse(
        val id: Long,
        val name: String,

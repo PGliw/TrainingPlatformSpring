@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.service.Trainer2Service
-import pl.pchorosc.training.platform.utils.toTrainer2Response
 
 @RestController
 @RequestMapping("/trainers2")
