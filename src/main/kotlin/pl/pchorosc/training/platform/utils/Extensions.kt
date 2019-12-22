@@ -1,12 +1,15 @@
 package pl.pchorosc.training.platform.utils
 
 import pl.pchorosc.training.platform.data.Centre
+import pl.pchorosc.training.platform.data.Offer
 import pl.pchorosc.training.platform.data.Sport
 import pl.pchorosc.training.platform.data.Trainer2
 import pl.pchorosc.training.platform.data.dto.CentreDTO
+import pl.pchorosc.training.platform.data.dto.OfferDTO
 import pl.pchorosc.training.platform.data.dto.SportDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
+import pl.pchorosc.training.platform.data.response.OfferResponse
 import pl.pchorosc.training.platform.data.response.SportResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import java.time.LocalDate
@@ -63,6 +66,7 @@ fun CentreDTO.toCentre() : Centre {
 
 fun Sport.toSportResponse(): SportResponse {
     return SportResponse(
+            id = id,
             name = name,
             photoUrl = photoUrl
     )
@@ -73,4 +77,16 @@ fun SportDTO.toSport(): Sport {
             name = name,
             photoUrl = photoUrl
     )
+}
+
+fun Offer.toOfferResponse(): OfferResponse{
+    return OfferResponse(
+            pricePerHour = pricePerHour,
+            trainerID = trainer.id,
+            sportID = sport.id
+    )
+}
+
+fun OfferDTO.toOffer(): Offer{
+    return Offer(pricePerHour)
 }
