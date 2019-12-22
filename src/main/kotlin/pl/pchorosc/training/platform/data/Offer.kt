@@ -5,12 +5,13 @@ import javax.persistence.*
 @Entity
 @Table(name = "offers")
 class Offer(
-        @Id
-        @GeneratedValue
-        var id: Long,
         var pricePerHour: Float
 ) {
-    constructor() : this(0, 0f)
+    constructor() : this(0f)
+
+    @Id
+    @GeneratedValue
+    var id: Long = 0L
 
     @ManyToOne
     var sport = Sport()

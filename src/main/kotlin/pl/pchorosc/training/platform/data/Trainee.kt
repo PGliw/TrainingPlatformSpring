@@ -7,9 +7,6 @@ import javax.persistence.*
 @Entity
 @Table(name = "trainees")
 class Trainee(
-        @Id
-        @GeneratedValue
-        override var id: Long,
         @Column(unique = true)
         override var email: String,
         override var password: String,
@@ -18,10 +15,15 @@ class Trainee(
         override var phone: String,
         override var birthday: LocalDate,
         override var photoUrl: String
-) : User(id, email, password, firstName, lastName, phone, birthday, photoUrl) {
+) : User(email, password, firstName, lastName, phone, birthday, photoUrl) {
     constructor() : this(
-            0, "", "", "", "", "", LocalDate.now(), ""
+            "", "", "", "", "", LocalDate.now(), ""
     )
+
+    // TODO check if its necessary to override id
+    @Id
+    @GeneratedValue
+    override var id: Long = 0L
 
     @OneToMany(mappedBy = "author")
     var givenOpinions = listOf<OpinionTraineeAboutTrainer>()

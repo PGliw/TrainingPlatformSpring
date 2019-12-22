@@ -1,13 +1,6 @@
-package pl.pchorosc.training.platform.data
+package pl.pchorosc.training.platform.data.dto
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.UpdateTimestamp
-import org.springframework.data.jpa.repository.Temporal
-import java.sql.Date
-import java.time.LocalDateTime
-import javax.persistence.*
+import pl.pchorosc.training.platform.data.Trainer
 
 /**
  * Data Transfer Object used to transfer via REST API (HTTP)

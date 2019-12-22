@@ -6,14 +6,16 @@ import javax.persistence.*
 @Entity
 @Table(name = "centres")
 class Centre(
-        @Id
-        @GeneratedValue
-        var id: Long,
         var name: String,
         var latitude: Float,
-        var longitude: Float
+        var longitude: Float,
+        var photoUrl: String
 ) {
-    constructor() : this(0, "", 0f, 0f)
+    constructor() : this("", 0f, 0f, "")
+
+    @Id
+    @GeneratedValue
+    var id: Long = 0L
 
     @OneToMany
     var image = listOf<Image>()

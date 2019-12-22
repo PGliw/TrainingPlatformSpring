@@ -3,7 +3,7 @@ package pl.pchorosc.training.platform.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.Trainer
-import pl.pchorosc.training.platform.data.TrainerDTO
+import pl.pchorosc.training.platform.data.dto.TrainerDTO
 import pl.pchorosc.training.platform.repository.TrainerRepository
 import java.util.*
 
@@ -26,7 +26,7 @@ class TrainerService {
      * Saves a given entity. Use the returned instance for further operations as
      * the save operation might have changed the entity instance completely.
      *
-     * @param entity must not be {@literal null}.
+     * @param trainerDto must not be {@literal null}.
      * @return the saved entity will never be {@literal null}.
      */
     fun insertTrainer(trainerDto: TrainerDTO): Trainer = repository.save(
@@ -44,7 +44,7 @@ class TrainerService {
      * Saves a given entity. Use the returned instance for further operations as
      * the save operation might have changed the entity instance completely.
      *
-     * @param entity must not be {@literal null}.
+     * @param trainerDto must not be {@literal null}.
      * @return the saved entity will never be {@literal null}.
      */
     fun updateTrainer(trainerDto: TrainerDTO): TrainerDTO {
@@ -62,11 +62,11 @@ class TrainerService {
 
     fun getRegisteredLaterThan(date: Date): Iterable<TrainerDTO> = repository.findRegisteredLaterThan(date.time).map { TrainerDTO(it) }
 
-    fun findByLastName(lastName: String) : Iterable<TrainerDTO> = repository.findByLastName(lastName).map { TrainerDTO(it) }
+    fun findByLastName(lastName: String): Iterable<TrainerDTO> = repository.findByLastName(lastName).map { TrainerDTO(it) }
 
-    fun deleteTrainer(trainerId : String) : TrainerDTO {
-            val trainer = repository.findById(trainerId).get()
-            repository.deleteById(trainer.id)
-            return TrainerDTO(trainer)
+    fun deleteTrainer(trainerId: String): TrainerDTO {
+        val trainer = repository.findById(trainerId).get()
+        repository.deleteById(trainer.id)
+        return TrainerDTO(trainer)
     }
 }
