@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
+import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.service.Trainer2Service
+import pl.pchorosc.training.platform.utils.toTrainer2Response
 
 @RestController
 @RequestMapping("/trainers2")
@@ -14,12 +16,10 @@ class Trainer2Controller {
     @Autowired
     private lateinit var trainer2Service: Trainer2Service
 
-//    @Autowired
-//    private lateinit var modelMapper: ModelMapper
 
     @GetMapping
-    fun getTrainers(): List<Trainer2DTO> =
-            trainer2Service.getTrainers().map { Trainer2DTO(it) }
+    fun getTrainers(): Iterable<Trainer2Response> =
+            trainer2Service.getTrainers()
 
     @PostMapping
     fun addTrainer(@RequestBody trainer2DTO: Trainer2DTO) =
