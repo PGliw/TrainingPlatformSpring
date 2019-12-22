@@ -22,5 +22,5 @@ class Trainer2Service {
             trainer2DTO.toTrainer2()
     ).toTrainer2Response()
 
-    fun getTrainer(id: Long) = repository.findById(id).get()
+    fun getTrainer(id: Long): Trainer2Response = repository.findById(id).get().toTrainer2Response()
 }

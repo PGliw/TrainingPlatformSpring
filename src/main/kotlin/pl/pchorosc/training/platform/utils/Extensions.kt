@@ -1,7 +1,10 @@
 package pl.pchorosc.training.platform.utils
 
+import pl.pchorosc.training.platform.data.Centre
 import pl.pchorosc.training.platform.data.Trainer2
+import pl.pchorosc.training.platform.data.dto.CentreDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
+import pl.pchorosc.training.platform.data.response.CentreResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import java.time.LocalDate
 
@@ -32,5 +35,25 @@ fun Trainer2DTO.toTrainer2() : Trainer2{
             phone = phone,
             birthday = birthday,
             description = description
+    )
+}
+
+fun Centre.toCentreResponse() : CentreResponse{
+    return CentreResponse(
+            id = id,
+            name = name,
+            latitude = latitude,
+            longitude = longitude,
+            photoUrl = photoUrl,
+            imagesUrls = image.map { it.url }
+    )
+}
+
+fun CentreDTO.toCentre() : Centre {
+    return Centre(
+            name = name,
+            latitude = latitude,
+            longitude = longitude,
+            photoUrl = photoUrl
     )
 }
