@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
@@ -20,18 +19,16 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore
 import javax.sql.DataSource
 
+/**
+ * Configuration class for embedded (in-application) OAuth2 server
+ * * it handles access and refresh tokens - generation, refreshing, storing
+ */
 @Configuration
 @EnableAuthorizationServer
 class OAuth2ServerConfig : AuthorizationServerConfigurerAdapter() {
 
     @Autowired
-    lateinit var dataSource: DataSource
-
-    @Autowired
     lateinit var authenticationManager: AuthenticationManager
-
-    @Autowired
-    lateinit var passwordEncoder: PasswordEncoder
 
     @Autowired
     lateinit var tokenStore: TokenStore
@@ -74,7 +71,7 @@ class OAuth2ServerConfig : AuthorizationServerConfigurerAdapter() {
                 ?.inMemory()
                 ?.withClient("frontendClientId")
                 ?.secret("frontendClientSecret")
-                ?.authorizedGrantTypes("password","authorization_code", "refresh_token")
+                ?.authorizedGrantTypes("password", "authorization_code", "refresh_token")
                 ?.accessTokenValiditySeconds(3600)
                 ?.refreshTokenValiditySeconds(28 * 24 * 3600)
                 ?.scopes("all")
@@ -83,24 +80,10 @@ class OAuth2ServerConfig : AuthorizationServerConfigurerAdapter() {
     }
 
     @Bean
-    fun tokenStore() : TokenStore = InMemoryTokenStore()
+    fun tokenStore(): TokenStore = InMemoryTokenStore()
 
+    // TODO change encoder to BCrypt here and while storing entities - BCryptPasswordEncoder()
     @Bean
-    fun passwordEncoder() : PasswordEncoder = NoOpPasswordEncoder.getInstance() //BCryptPasswordEncoder()
+    fun passwordEncoder(): PasswordEncoder = NoOpPasswordEncoder.getInstance()
 }
 
-@Configuration
-@EnableResourceServer
-class ResourceServerConfig: ResourceServerConfigurerAdapter() {
-
-    override fun configure(http: HttpSecurity?) {
-
-        http?.authorizeRequests()
-                ?.antMatchers("/")?.permitAll()
-                ?.antMatchers(HttpMethod.POST, "/trainers", "/trainees")?.permitAll()
-                ?.antMatchers("/oauth/check_token")?.permitAll()
-                ?.antMatchers("/oauth/token_key")?.permitAll()
-        //?.anyRequest()?.authenticated()
-
-    }
-}
