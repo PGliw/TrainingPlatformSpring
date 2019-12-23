@@ -50,6 +50,16 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	implementation("org.springframework.boot:spring-boot-starter-security:2.2.2.RELEASE")
 
+	// For embedding oauth server
+	// https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2
+	implementation("org.springframework.security.oauth:spring-security-oauth2:2.4.0.RELEASE")
+
+	// For using app as oauth client
+	// https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure
+	implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.2.2.RELEASE")
+
+
+
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("mysql:mysql-connector-java")
