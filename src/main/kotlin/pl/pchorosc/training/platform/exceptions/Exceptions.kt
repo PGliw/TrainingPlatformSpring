@@ -24,3 +24,6 @@ class OfferNotFoundException : RuntimeException("No offer with given ID was foun
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 class CentreNotFoundException : RuntimeException("No centre with given ID was found")
 
+@Component
+@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+class UnauthorizedException : RuntimeException("You are unauthorized")

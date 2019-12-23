@@ -111,3 +111,39 @@ fun OfferDTO.toOffer(): Offer {
     return Offer(pricePerHour)
 }
 
+fun OpinionTraineeAboutTrainer.toOpinionResponse() : OpinionResponse{
+    return OpinionResponse(
+            id = id,
+            authorID = author.id,
+            subjectID = subject.id,
+            grade = grade,
+            opinion = opinion
+    )
+}
+
+
+fun OpinionDTO.toOpinionTraineeAboutTrainer() : OpinionTraineeAboutTrainer{
+    return OpinionTraineeAboutTrainer(
+            grade = grade,
+            opinion = opinion
+    )
+}
+
+fun OpinionTrainerAboutTrainee.toOpinionResponse() : OpinionResponse{
+    return OpinionResponse(
+            id = id,
+            authorID = author.id,
+            subjectID = subject.id,
+            grade = grade,
+            opinion = opinion
+    )
+}
+
+
+fun OpinionDTO.toOpinionTrainerAboutTrainee() : OpinionTrainerAboutTrainee{
+    return OpinionTrainerAboutTrainee(
+            grade = grade,
+            opinion = opinion
+    )
+}
+
