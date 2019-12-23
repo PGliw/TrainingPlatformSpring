@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  */
 @Configuration
 @EnableResourceServer
-@Order(1) // this is important to run this before Spring OAuth2
 class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 
     /**
@@ -20,9 +19,7 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
      */
     override fun configure(http: HttpSecurity?) {
 
-        // TODO fix to access login/registration without authentication
         http?.authorizeRequests()
-                ?.antMatchers("/trainers2", "/centres")?.permitAll()
                 ?.anyRequest()?.authenticated()
 
     }
