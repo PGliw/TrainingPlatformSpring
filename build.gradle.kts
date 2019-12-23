@@ -43,6 +43,14 @@ dependencies {
 	// Google CloudSQL MySQL
 	// implementation("org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.0.0.M2")
 
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+	//implementation("org.springframework.security:spring-security-core:5.2.1.RELEASE")
+	//implementation("org.springframework.security:spring-security-config:5.2.1.RELEASE")
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	implementation("org.springframework.boot:spring-boot-starter-security:2.2.2.RELEASE")
+
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {

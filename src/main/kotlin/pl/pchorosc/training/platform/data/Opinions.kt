@@ -4,13 +4,14 @@ import javax.persistence.*
 
 @Entity
 class OpinionTrainerAboutTrainee(
-        @Id
-        @GeneratedValue
-        var id: Long,
         var grade: Int,
         var opinion: String
 ) {
-    constructor() : this(0, 0, "")
+    constructor() : this(0, "")
+
+    @Id
+    @GeneratedValue
+    var id: Long = 0L
 
     @ManyToOne
     var author = Trainer2()
@@ -21,13 +22,14 @@ class OpinionTrainerAboutTrainee(
 
 @Entity
 class OpinionTraineeAboutTrainer(
-        @Id
-        @GeneratedValue
-        var id: Long,
         var grade: Int,
         var opinion: String
 ) {
-    constructor() : this(0, 0, "")
+    constructor() : this( 0, "")
+
+    @Id
+    @GeneratedValue
+    var id: Long = 0L
 
     @ManyToOne
     var author = Trainee()

@@ -22,6 +22,14 @@ interface OfferRepository : CrudRepository<Offer, Long>
 
 interface SportRepository : CrudRepository<Sport, Long>
 
+interface TrainerOpinionRepository : CrudRepository<OpinionTraineeAboutTrainer, Long>{
+    fun findBySubjectId(subjectId: Long) : Iterable<OpinionTraineeAboutTrainer>
+}
+
+interface TraineeOpinionRepository : CrudRepository<OpinionTrainerAboutTrainee, Long>{
+    fun findBySubjectId(subjectId: Long) : Iterable<OpinionTrainerAboutTrainee>
+}
+
 interface PassRepository : CrudRepository<Pass, Long>
 
 interface ImageRepository : CrudRepository<Image, Long>
