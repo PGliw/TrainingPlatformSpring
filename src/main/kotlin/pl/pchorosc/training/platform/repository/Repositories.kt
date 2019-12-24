@@ -1,5 +1,6 @@
 package pl.pchorosc.training.platform.repository
 
+import User
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import pl.pchorosc.training.platform.data.*
@@ -18,6 +19,10 @@ interface Trainer2Repository : CrudRepository<Trainer2, Long>{
 
 interface TraineeRepository : CrudRepository<Trainee, Long>{
     fun findFirstByEmail(email: String): Trainee?
+}
+
+interface UserRepository: CrudRepository<User, Long>{
+    fun findByEmail(email: String): User?
 }
 
 interface CentreRepository : CrudRepository<Centre, Long>

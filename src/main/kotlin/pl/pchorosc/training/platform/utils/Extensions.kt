@@ -1,5 +1,6 @@
 package pl.pchorosc.training.platform.utils
 
+import User
 import pl.pchorosc.training.platform.data.*
 import pl.pchorosc.training.platform.data.dto.*
 import pl.pchorosc.training.platform.data.response.*
@@ -39,6 +40,19 @@ fun Trainer2DTO.toTrainer2(): Trainer2 {
 fun Trainee.toTraineeResponse(): TraineeResponse {
     val birthdayStr = birthday.toString()
     return TraineeResponse(
+            id = id,
+            email = email,
+            firstName = firstName,
+            lastName = lastName,
+            photoUrl = photoUrl,
+            phone = phone,
+            birthday = birthdayStr
+    )
+}
+
+fun User.toUserResponse(): UserResponse {
+    val birthdayStr = birthday.toString()
+    return UserResponse(
             id = id,
             email = email,
             firstName = firstName,
