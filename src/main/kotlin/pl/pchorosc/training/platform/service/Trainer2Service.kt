@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
+import pl.pchorosc.training.platform.data.response.OpinionResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
 import pl.pchorosc.training.platform.repository.Trainer2Repository
@@ -24,4 +25,5 @@ class Trainer2Service {
 
     fun getTrainer(id: Long): Trainer2Response =
             repository.findByIdOrNull(id)?.toTrainer2Response() ?: throw TrainerNotFoundException()
+
 }

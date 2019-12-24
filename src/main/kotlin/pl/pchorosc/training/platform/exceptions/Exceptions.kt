@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.ResponseStatus
 
 @Component
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
+class UserNotFoundException : RuntimeException("No user with given email was found")
+
+@Component
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 class TrainerNotFoundException : RuntimeException("No trainer with given ID was found")
 
 @Component
