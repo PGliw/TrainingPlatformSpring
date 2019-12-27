@@ -19,5 +19,5 @@ class TraineeService {
     fun getTrainee(id: Long): TraineeResponse =
             traineeRepository.findByIdOrNull(id)?.toTraineeResponse() ?: throw TraineeNotFoundException()
 
-    fun insertTrainee(traineeDTO: TraineeDTO) = traineeRepository.save(traineeDTO.toTrainee())
+    fun insertTrainee(traineeDTO: TraineeDTO) = traineeRepository.save(traineeDTO.toTrainee()).toTraineeResponse()
 }

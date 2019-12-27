@@ -71,6 +71,7 @@ class OAuth2ServerConfig : AuthorizationServerConfigurerAdapter() {
                 ?.inMemory()
                 ?.withClient("frontendClientId")
                 ?.secret("frontendClientSecret")
+                ?.authorizedGrantTypes("password")
                 ?.authorizedGrantTypes("password", "authorization_code", "refresh_token")
                 ?.accessTokenValiditySeconds(3600)
                 ?.refreshTokenValiditySeconds(28 * 24 * 3600)
