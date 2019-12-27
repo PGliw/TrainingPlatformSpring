@@ -33,6 +33,7 @@ class Trainer2Service {
     fun getTrainers(
             sportID: Long? = null, centreID: Long? = null
     ): Iterable<Trainer2Response> = when {
+        centreID != null && sportID != null -> trainer2Repository.findByCentresIdAndOffersSportId(centreID, sportID)
         centreID != null -> trainer2Repository.findByCentresId(centreID)
         sportID != null -> trainer2Repository.findByOffersSportId(sportID)
         else -> trainer2Repository.findAll()

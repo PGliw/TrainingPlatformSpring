@@ -25,9 +25,10 @@ class Trainer2Controller {
 
     @GetMapping
     fun getTrainers(
-            @RequestParam sportID: Long?,
-            @RequestParam centreID: Long?
-    ): Iterable<Trainer2Response> = trainer2Service.getTrainers(sportID, centreID)
+            @RequestParam requestParams : Map<String,String>
+    ): Iterable<Trainer2Response> = trainer2Service.getTrainers(
+            requestParams["sportID"]?.toLong(),
+            requestParams["centreID"]?.toLong())
 
     @GetMapping(value = ["/summaries"])
     fun getTrainersSummaries(): Iterable<SummaryResponse> = trainer2Service.getTrainersSummaries()
