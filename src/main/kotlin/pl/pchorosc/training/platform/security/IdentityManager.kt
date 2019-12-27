@@ -18,7 +18,7 @@ interface IIdentityManager{
 }
 
 @Component
-class IdentityManager() : IIdentityManager{
+class IdentityManager : IIdentityManager{
 
     @Autowired
     private lateinit var userRepository: UserRepository

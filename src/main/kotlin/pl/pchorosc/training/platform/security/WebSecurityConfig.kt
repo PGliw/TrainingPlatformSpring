@@ -34,20 +34,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     /**
-     * Ignoring OAuth authentication in following cases:
-     * * adding (registering) a new user (trainer or trainee)
-     * * adding a new centre
-     */
-    override fun configure(webSecurity: WebSecurity?) {
-        webSecurity
-                ?.ignoring()?.antMatchers(HttpMethod.POST, "/trainers2")
-                ?.and()
-                ?.ignoring()?.antMatchers(HttpMethod.POST,"/trainees")
-                ?.and()
-                ?.ignoring()?.antMatchers(HttpMethod.POST,"/centres")
-    }
-
-    /**
      * This bean is required for authentication server.
      * (It gets autowired (injected) into OAuth2ServerConfig class).
      */

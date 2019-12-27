@@ -1,7 +1,7 @@
 package pl.pchorosc.training.platform.security
 
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.annotation.Order
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
@@ -19,8 +19,15 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
      */
     override fun configure(http: HttpSecurity?) {
 
+
         http?.authorizeRequests()
+                ?.antMatchers("/")?.permitAll()
+                ?.antMatchers(HttpMethod.POST, "/trainers2")?.permitAll()
+                ?.antMatchers(HttpMethod.POST, "/trainees")?.permitAll()
+                ?.antMatchers(HttpMethod.POST, "/centres")?.permitAll()
                 ?.anyRequest()?.authenticated()
+
+                ?: throw Exception("ResourceServerConfig: http = null")
 
     }
 }
