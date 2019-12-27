@@ -29,20 +29,20 @@ class Trainer2(
     override var id: Long = 0L
 
     @OneToMany(mappedBy = "trainer")
-    var trainings = listOf<Training>()
+    var trainings = mutableListOf<Training>()
 
     @OneToMany
-    var images = listOf<Image>()
+    var images = mutableListOf<Image>()
 
     @OneToMany(mappedBy = "trainer")
-    var offers = listOf<Offer>()
+    var offers = mutableListOf<Offer>()
 
     @OneToMany(mappedBy = "author")
-    var givenOpinions = listOf<OpinionTrainerAboutTrainee>()
+    var givenOpinions = mutableListOf<OpinionTrainerAboutTrainee>()
 
     @OneToMany(mappedBy = "subject")
-    var receivedOpinions = listOf<OpinionTraineeAboutTrainer>()
+    var receivedOpinions = mutableListOf<OpinionTraineeAboutTrainer>()
 
     @ManyToMany(mappedBy = "trainers")
-    var centres = setOf<Centre>()
+    var centres = mutableSetOf<Centre>()
 }

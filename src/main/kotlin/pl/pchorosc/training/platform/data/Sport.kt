@@ -16,8 +16,8 @@ class Sport(
     var id: Long = 0L
 
     @OneToMany(mappedBy = "sport")
-    var offers = listOf<Offer>()
+    var offers = mutableListOf<Offer>()
 
     @ManyToMany(mappedBy = "sports")
-    var centres = setOf<Centre>()
+    var centres = mutableSetOf<Centre>()
 }

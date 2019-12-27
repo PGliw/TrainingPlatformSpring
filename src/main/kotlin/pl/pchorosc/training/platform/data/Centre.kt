@@ -18,7 +18,7 @@ class Centre(
     var id: Long = 0L
 
     @OneToMany
-    var image = listOf<Image>()
+    var image = mutableListOf<Image>()
 
     @ManyToMany
     @JoinTable(
@@ -26,13 +26,13 @@ class Centre(
             joinColumns = [JoinColumn(name = "fk_centre")],
             inverseJoinColumns = [JoinColumn(name = "fk_trainer")]
     )
-    var trainers = setOf<Trainer2>()
+    var trainers = mutableSetOf<Trainer2>()
 
     @ManyToMany(mappedBy = "centres")
-    var passes = setOf<Pass>()
+    var passes = mutableSetOf<Pass>()
 
     @OneToMany(mappedBy = "centre")
-    var trainings = listOf<Training>()
+    var trainings = mutableListOf<Training>()
 
     @ManyToMany
     @JoinTable(
@@ -40,5 +40,5 @@ class Centre(
             joinColumns = [JoinColumn(name = "fk_centre")],
             inverseJoinColumns = [JoinColumn(name = "fk_sport")]
     )
-    var sports = setOf<Sport>()
+    var sports = mutableSetOf<Sport>()
 }

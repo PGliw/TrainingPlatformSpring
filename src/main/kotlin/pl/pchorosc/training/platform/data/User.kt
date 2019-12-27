@@ -24,5 +24,5 @@ open class User(
     open var id: Long = 0L
 
     @OneToMany(mappedBy = "user")
-    var passes = listOf<Pass>()
+    var passes = mutableListOf<Pass>()
 }
