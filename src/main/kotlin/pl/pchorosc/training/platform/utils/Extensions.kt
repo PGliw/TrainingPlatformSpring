@@ -166,19 +166,19 @@ fun OpinionDTO.toOpinionTrainerAboutTrainee(): OpinionTrainerAboutTrainee {
 
 fun Centre.toSummary() = SummaryResponse(
         id = id,
-        photoUrl = photoUrl,
+        imageUrl = photoUrl,
         title = name
 )
 
 fun Trainer2.toSummary() = SummaryResponse(
         id = id,
-        photoUrl = photoUrl,
+        imageUrl = photoUrl,
         title = "$firstName $lastName"
 )
 
 fun Sport.toSummary() = SummaryResponse(
         id = id,
-        photoUrl = photoUrl,
+        imageUrl = photoUrl,
         title = name
 )
 
