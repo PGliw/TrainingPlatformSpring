@@ -8,10 +8,11 @@ import javax.persistence.Table
 @Entity
 @Table(name = "images")
 class Image(
-        @Id
-        @GeneratedValue
-        var id: Long,
         var url: String
 ) {
-    constructor() : this(0, "")
+    constructor() : this("")
+
+    @Id
+    @GeneratedValue
+    var id: Long = 0L
 }

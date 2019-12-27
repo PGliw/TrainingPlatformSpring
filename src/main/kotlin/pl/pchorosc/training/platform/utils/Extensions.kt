@@ -115,9 +115,11 @@ fun SportDTO.toSport(): Sport {
 
 fun Offer.toOfferResponse(): OfferResponse {
     return OfferResponse(
+            id = id,
             pricePerHour = pricePerHour,
             trainerID = trainer.id,
-            sportID = sport.id
+            sportID = sport.id,
+            sportName = sport.name
     )
 }
 

@@ -31,3 +31,7 @@ class CentreNotFoundException : RuntimeException("No centre with given ID was fo
 @Component
 @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 class UnauthorizedException : RuntimeException("You are unauthorized")
+
+@Component
+@ResponseStatus(value = HttpStatus.CONFLICT)
+class ResourceAlreadyExistsException : RuntimeException("Resource already exists")

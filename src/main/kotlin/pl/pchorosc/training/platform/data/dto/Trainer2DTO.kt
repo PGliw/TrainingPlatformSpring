@@ -19,6 +19,10 @@ data class Trainer2CentresDTO(
         val centresIDs: List<Long>
 )
 
+data class Trainer2SportsDTO(
+        val sportsIDs: List<Long>
+)
+
 
 
 

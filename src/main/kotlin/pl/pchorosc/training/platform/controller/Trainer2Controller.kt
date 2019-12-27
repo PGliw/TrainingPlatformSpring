@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.OpinionDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
+import pl.pchorosc.training.platform.data.dto.Trainer2SportsDTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
 import pl.pchorosc.training.platform.data.response.Summary
 import pl.pchorosc.training.platform.data.response.Trainer2Response
@@ -40,6 +41,16 @@ class Trainer2Controller {
 
     @PostMapping
     fun addTrainer(@RequestBody trainer2DTO: Trainer2DTO) = trainer2Service.insertTrainer(trainer2DTO)
+
+    @GetMapping(value = ["/{id}/offers"])
+    fun getTrainerOffers(@PathVariable id: Long) = trainer2Service.getTrainerOffers(id)
+
+    @GetMapping(value = ["/{id}/images"])
+    fun getTrainerImages(@PathVariable id: Long) = trainer2Service.getTrainerImages(id)
+
+    @PostMapping(value = ["/{id}/images"])
+    fun addTrainerImages(@PathVariable id: Long,
+                         @RequestBody imagesUrls: List<String>) = trainer2Service.insertTrainerImages(id, imagesUrls)
 
     @GetMapping(value = ["/{id}/opinions"])
     fun getTrainerOpinions(@PathVariable id: Long) = opinionService.getOpinionsAboutTrainer(id)
