@@ -13,7 +13,7 @@ class TraineeTraining(
     var opinion: String = ""
 
     @OneToMany
-    var images = listOf<Image>()
+    var images = mutableListOf<Image>()
 
     @ManyToOne
     var trainee = Trainee()

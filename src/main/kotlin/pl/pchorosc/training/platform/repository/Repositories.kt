@@ -15,6 +15,7 @@ interface TrainerRepository : CrudRepository<Trainer, String> {
 
 interface Trainer2Repository : CrudRepository<Trainer2, Long>{
     fun findFirstByEmail(email: String) : Trainer2?
+    fun findByCentresId(id: Long) : Iterable<Trainer2>
 }
 
 interface TraineeRepository : CrudRepository<Trainee, Long>{

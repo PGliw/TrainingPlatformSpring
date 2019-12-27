@@ -25,7 +25,7 @@ class Training(
     var trainer = Trainer2()
 
     @OneToMany(mappedBy = "training")
-    var trainingTrainees = listOf<TraineeTraining>()
+    var trainingTrainees = mutableListOf<TraineeTraining>()
 
     @ManyToOne
     var centre = Centre()

@@ -28,5 +28,5 @@ class Pass(
             joinColumns = [JoinColumn(name = "fk_pass")],
             inverseJoinColumns = [JoinColumn(name = "fk_centre")]
     )
-    var centres = setOf<Centre>()
+    var centres = mutableSetOf<Centre>()
 }

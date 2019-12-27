@@ -26,11 +26,11 @@ class Trainee(
     override var id: Long = 0L
 
     @OneToMany(mappedBy = "author")
-    var givenOpinions = listOf<OpinionTraineeAboutTrainer>()
+    var givenOpinions = mutableListOf<OpinionTraineeAboutTrainer>()
 
     @OneToMany(mappedBy = "subject")
-    var receivedOpinions = listOf<OpinionTrainerAboutTrainee>()
+    var receivedOpinions = mutableListOf<OpinionTrainerAboutTrainee>()
 
     @OneToMany(mappedBy = "trainee")
-    var traineeTrainings = listOf<TraineeTraining>()
+    var traineeTrainings = mutableListOf<TraineeTraining>()
 }

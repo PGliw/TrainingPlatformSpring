@@ -44,5 +44,5 @@ class Trainer2(
     var receivedOpinions = listOf<OpinionTraineeAboutTrainer>()
 
     @ManyToMany(mappedBy = "trainers")
-    var centres = setOf<Centre>()
+    var centres = mutableSetOf<Centre>()
 }

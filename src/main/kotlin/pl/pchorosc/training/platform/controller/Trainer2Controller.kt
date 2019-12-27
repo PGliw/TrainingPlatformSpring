@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.OpinionDTO
+import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
+import pl.pchorosc.training.platform.data.response.CentreResponse
 import pl.pchorosc.training.platform.data.response.Summary
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.service.OpinionService
@@ -22,10 +24,16 @@ class Trainer2Controller {
     private lateinit var opinionService: OpinionService
 
     @GetMapping
-    fun getTrainers(): Iterable<Trainer2Response> = trainer2Service.getTrainers()
+    fun getTrainers(
+            @RequestParam sportID: Long?,
+            @RequestParam centreID: Long?
+    ): Iterable<Trainer2Response> = trainer2Service.getTrainers(sportID, centreID)
 
     @GetMapping(value = ["/summaries"])
     fun getTrainersSummaries(): Iterable<Summary> = trainer2Service.getTrainersSummaries()
+
+    @GetMapping(value = ["{id}/centres"])
+    fun getTrainerCentres(@PathVariable id: Long): Iterable<CentreResponse> = trainer2Service.getTrainerCentres(id)
 
     @GetMapping(value = ["/{id}"])
     fun getTrainer(@PathVariable id: Long) = trainer2Service.getTrainer(id)
@@ -38,4 +46,9 @@ class Trainer2Controller {
 
     @PostMapping(value = ["/{id}/opinions"])
     fun addTrainerOpinions(@RequestBody opinionDTO: OpinionDTO) = opinionService.insertOpinionAboutTrainer(opinionDTO)
+
+    @PostMapping(value = ["{id}/centres"])
+    fun addTrainerCentres(@PathVariable id: Long,
+                          @RequestBody trainer2CentresDTO: Trainer2CentresDTO)
+            : Iterable<CentreResponse> = trainer2Service.assignCentresToTrainer(id, trainer2CentresDTO)
 }
