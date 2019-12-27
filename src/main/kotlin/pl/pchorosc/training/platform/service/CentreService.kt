@@ -5,7 +5,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.dto.CentreDTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
-import pl.pchorosc.training.platform.data.response.Summary
+import pl.pchorosc.training.platform.data.response.SummaryResponse
 import pl.pchorosc.training.platform.exceptions.CentreNotFoundException
 import pl.pchorosc.training.platform.repository.CentreRepository
 import pl.pchorosc.training.platform.utils.toCentre
@@ -20,7 +20,7 @@ class CentreService {
 
     fun getCenters(): Iterable<CentreResponse> = repository.findAll().map { it.toCentreResponse() }
 
-    fun getCentresSummaries(): Iterable<Summary> = repository.findAll().map { it.toSummary() }
+    fun getCentresSummaries(): Iterable<SummaryResponse> = repository.findAll().map { it.toSummary() }
 
     fun getCentre(id: Long): CentreResponse =
             repository.findByIdOrNull(id)?.toCentreResponse() ?: throw CentreNotFoundException()

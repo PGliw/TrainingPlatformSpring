@@ -5,6 +5,7 @@ import pl.pchorosc.training.platform.data.*
 import pl.pchorosc.training.platform.data.dto.*
 import pl.pchorosc.training.platform.data.response.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 fun Trainer2.toTrainer2Response(): Trainer2Response {
     val birthdayStr = birthday.toString()
@@ -127,7 +128,7 @@ fun OfferDTO.toOffer(): Offer {
     return Offer(pricePerHour)
 }
 
-fun OpinionTraineeAboutTrainer.toOpinionResponse() : OpinionResponse{
+fun OpinionTraineeAboutTrainer.toOpinionResponse(): OpinionResponse {
     return OpinionResponse(
             id = id,
             authorID = author.id,
@@ -138,14 +139,14 @@ fun OpinionTraineeAboutTrainer.toOpinionResponse() : OpinionResponse{
 }
 
 
-fun OpinionDTO.toOpinionTraineeAboutTrainer() : OpinionTraineeAboutTrainer{
+fun OpinionDTO.toOpinionTraineeAboutTrainer(): OpinionTraineeAboutTrainer {
     return OpinionTraineeAboutTrainer(
             grade = grade,
             opinion = opinion
     )
 }
 
-fun OpinionTrainerAboutTrainee.toOpinionResponse() : OpinionResponse{
+fun OpinionTrainerAboutTrainee.toOpinionResponse(): OpinionResponse {
     return OpinionResponse(
             id = id,
             authorID = author.id,
@@ -156,28 +157,56 @@ fun OpinionTrainerAboutTrainee.toOpinionResponse() : OpinionResponse{
 }
 
 
-fun OpinionDTO.toOpinionTrainerAboutTrainee() : OpinionTrainerAboutTrainee{
+fun OpinionDTO.toOpinionTrainerAboutTrainee(): OpinionTrainerAboutTrainee {
     return OpinionTrainerAboutTrainee(
             grade = grade,
             opinion = opinion
     )
 }
 
-fun Centre.toSummary() = Summary(
+fun Centre.toSummary() = SummaryResponse(
         id = id,
         photoUrl = photoUrl,
         title = name
 )
 
-fun Trainer2.toSummary() = Summary(
+fun Trainer2.toSummary() = SummaryResponse(
         id = id,
         photoUrl = photoUrl,
         title = "$firstName $lastName"
 )
 
-fun Sport.toSummary() = Summary(
+fun Sport.toSummary() = SummaryResponse(
         id = id,
         photoUrl = photoUrl,
         title = name
 )
+
+fun Training.toTrainingSummary() = TrainingSummaryResponse(
+        trainingID = id,
+        startDateTime = startDateTime.toString(),
+        endDateTime = endDateTime.toString(),
+        centreName = centre.name,
+        photoUrl = centre.photoUrl,
+        numberOfTrainees = trainingTrainees.size,
+        traineesLimit = traineeLimit,
+        trainingStatus = status.name
+)
+
+fun TrainingDTO.toTraining() = Training(
+        startDateTime = LocalDateTime.parse(startDateTime),
+        endDateTime = LocalDateTime.parse(startDateTime),
+        traineeLimit = traineeLimit,
+        status = status
+)
+
+fun Training.isOverlapping(another: Training): Boolean {
+    return (
+            trainer.id == another.trainer.id
+                    &&
+                    (startDateTime > another.startDateTime && startDateTime < another.endDateTime
+                            || endDateTime < another.endDateTime && endDateTime < another.startDateTime)
+            )
+}
+
 

@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.OpinionDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
-import pl.pchorosc.training.platform.data.dto.Trainer2SportsDTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
-import pl.pchorosc.training.platform.data.response.Summary
+import pl.pchorosc.training.platform.data.response.SummaryResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.service.OpinionService
 import pl.pchorosc.training.platform.service.Trainer2Service
@@ -31,7 +30,7 @@ class Trainer2Controller {
     ): Iterable<Trainer2Response> = trainer2Service.getTrainers(sportID, centreID)
 
     @GetMapping(value = ["/summaries"])
-    fun getTrainersSummaries(): Iterable<Summary> = trainer2Service.getTrainersSummaries()
+    fun getTrainersSummaries(): Iterable<SummaryResponse> = trainer2Service.getTrainersSummaries()
 
     @GetMapping(value = ["{id}/centres"])
     fun getTrainerCentres(@PathVariable id: Long): Iterable<CentreResponse> = trainer2Service.getTrainerCentres(id)
@@ -44,6 +43,9 @@ class Trainer2Controller {
 
     @GetMapping(value = ["/{id}/offers"])
     fun getTrainerOffers(@PathVariable id: Long) = trainer2Service.getTrainerOffers(id)
+
+    @GetMapping(value = ["/{id}/trainings"])
+    fun getTrainerTrainings(@PathVariable id: Long) = trainer2Service.getTrainingsSummaries(id)
 
     @GetMapping(value = ["/{id}/images"])
     fun getTrainerImages(@PathVariable id: Long) = trainer2Service.getTrainerImages(id)

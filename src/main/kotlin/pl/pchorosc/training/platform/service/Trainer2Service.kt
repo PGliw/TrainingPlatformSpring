@@ -5,18 +5,16 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pl.pchorosc.training.platform.data.Image
+import pl.pchorosc.training.platform.data.Training
 import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
-import pl.pchorosc.training.platform.data.dto.Trainer2SportsDTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
-import pl.pchorosc.training.platform.data.response.Summary
+import pl.pchorosc.training.platform.data.response.SummaryResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.exceptions.CentreNotFoundException
-import pl.pchorosc.training.platform.exceptions.SportNotFoundException
 import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
 import pl.pchorosc.training.platform.repository.CentreRepository
 import pl.pchorosc.training.platform.repository.ImageRepository
-import pl.pchorosc.training.platform.repository.SportRepository
 import pl.pchorosc.training.platform.repository.Trainer2Repository
 import pl.pchorosc.training.platform.utils.*
 
@@ -40,7 +38,9 @@ class Trainer2Service {
         else -> trainer2Repository.findAll()
     }.map { it.toTrainer2Response() }
 
-    fun getTrainersSummaries(): Iterable<Summary> = trainer2Repository.findAll().map { it.toSummary() }
+    fun getTrainersSummaries(): Iterable<SummaryResponse> = trainer2Repository.findAll().map { it.toSummary() }
+
+    fun getTrainingsSummaries(trainerID: Long) = getTrainerTrainings(trainerID).map { it.toTrainingSummary() }
 
     fun getTrainerCentres(id: Long) = trainer2Repository.findByIdOrNull(id)?.centres?.map { it.toCentreResponse() } ?: throw TrainerNotFoundException()
 
@@ -84,6 +84,8 @@ class Trainer2Service {
         return trainer.images.map { it.url }
     }
 
-
-
+    private fun getTrainerTrainings(trainerID: Long): Iterable<Training>{
+        val trainer = trainer2Repository.findByIdOrNull(trainerID) ?: throw TrainerNotFoundException()
+        return trainer.trainings
+    }
 }

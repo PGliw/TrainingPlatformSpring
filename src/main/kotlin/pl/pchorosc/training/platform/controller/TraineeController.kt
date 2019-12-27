@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.OpinionDTO
 import pl.pchorosc.training.platform.data.dto.TraineeDTO
+import pl.pchorosc.training.platform.data.dto.TrainingDTO
 import pl.pchorosc.training.platform.data.response.TraineeResponse
 import pl.pchorosc.training.platform.service.OpinionService
 import pl.pchorosc.training.platform.service.TraineeService
@@ -25,6 +26,12 @@ class TraineeController {
 
     @PostMapping
     fun addTrainee(@RequestBody traineeDTO: TraineeDTO) = traineeService.insertTrainee(traineeDTO)
+
+    @PostMapping(value = ["/{id}/trainings"])
+    fun addTraining(@RequestBody trainingDTO: TrainingDTO) = traineeService.insertTraineeTraining(trainingDTO)
+
+    @GetMapping(value = ["/{id}/trainings"])
+    fun getTrainings(@PathVariable id: Long) = traineeService.getTrainings(id)
 
     @GetMapping(value = ["/{id}/opinions"])
     fun getTrainerOpinions(@PathVariable id: Long) = opinionService.getOpinionsAboutTrainee(id)

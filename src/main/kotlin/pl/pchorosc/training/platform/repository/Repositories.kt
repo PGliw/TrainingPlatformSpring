@@ -47,3 +47,5 @@ interface ImageRepository : CrudRepository<Image, Long>
 
 interface TrainingRepository : CrudRepository<Training, Long>
 
+interface TraineeTrainingRepository: CrudRepository<TraineeTraining, Long>
+

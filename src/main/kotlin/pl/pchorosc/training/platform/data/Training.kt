@@ -10,16 +10,17 @@ enum class TrainingStatus {
 @Entity
 @Table(name = "trainings")
 class Training(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var id: Long,
         var startDateTime: LocalDateTime,
         var endDateTime: LocalDateTime,
         var traineeLimit: Int,
         @Enumerated(EnumType.STRING)
         var status: TrainingStatus
 ) {
-    constructor() : this(0, LocalDateTime.now(), LocalDateTime.now(), 0, TrainingStatus.PROPOSED)
+    constructor() : this(LocalDateTime.now(), LocalDateTime.now(), 0, TrainingStatus.PROPOSED)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: Long = 0L
 
     @ManyToOne
     var trainer = Trainer2()

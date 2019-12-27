@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.SportDTO
 import pl.pchorosc.training.platform.data.response.SportResponse
-import pl.pchorosc.training.platform.data.response.Summary
+import pl.pchorosc.training.platform.data.response.SummaryResponse
 import pl.pchorosc.training.platform.service.SportService
 
 @RestController
@@ -20,7 +20,7 @@ class SportController {
     fun getSports(): Iterable<SportResponse> = sportService.getSports()
 
     @GetMapping(value = ["/summaries"])
-    fun getSportsSummaries(): Iterable<Summary> = sportService.getSportsSummaries()
+    fun getSportsSummaries(): Iterable<SummaryResponse> = sportService.getSportsSummaries()
 
     @GetMapping(value = ["/{id}"])
     fun getSportById(@PathVariable id: Long) = sportService.getSport(id)

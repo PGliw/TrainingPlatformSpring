@@ -5,7 +5,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import pl.pchorosc.training.platform.data.dto.SportDTO
 import pl.pchorosc.training.platform.data.response.SportResponse
-import pl.pchorosc.training.platform.data.response.Summary
+import pl.pchorosc.training.platform.data.response.SummaryResponse
 import pl.pchorosc.training.platform.exceptions.SportNotFoundException
 import pl.pchorosc.training.platform.repository.SportRepository
 import pl.pchorosc.training.platform.utils.toSport
@@ -20,7 +20,7 @@ class SportService {
 
     fun getSports(): Iterable<SportResponse> = repository.findAll().map { it.toSportResponse() }
 
-    fun getSportsSummaries(): Iterable<Summary> = repository.findAll().map { it.toSummary() }
+    fun getSportsSummaries(): Iterable<SummaryResponse> = repository.findAll().map { it.toSummary() }
 
     fun insertSport(sportDTO: SportDTO): SportResponse = repository.save(
             sportDTO.toSport()
