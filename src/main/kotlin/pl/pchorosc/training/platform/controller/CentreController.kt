@@ -21,6 +21,9 @@ class CentreController {
     @GetMapping(value = ["/{id}"])
     fun getCentreById(@PathVariable id: Long) = centreService.getCentre(id)
 
+    @GetMapping(value = ["/summaries"])
+    fun getCentresSummaries() = centreService.getCentresSummaries()
+
     @PostMapping
     fun addCentre(@RequestBody centreDTO: CentreDTO) = centreService.insertCentre(centreDTO)
 

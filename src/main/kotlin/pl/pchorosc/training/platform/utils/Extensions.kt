@@ -161,3 +161,21 @@ fun OpinionDTO.toOpinionTrainerAboutTrainee() : OpinionTrainerAboutTrainee{
     )
 }
 
+fun Centre.toSummary() = Summary(
+        id = id,
+        photoUrl = photoUrl,
+        title = name
+)
+
+fun Trainer2.toSummary() = Summary(
+        id = id,
+        photoUrl = photoUrl,
+        title = "$firstName $lastName"
+)
+
+fun Sport.toSummary() = Summary(
+        id = id,
+        photoUrl = photoUrl,
+        title = name
+)
+
