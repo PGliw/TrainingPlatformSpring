@@ -23,6 +23,8 @@ data class TraineeTrainingShortSummary(
         val trainerLastName: String,
         val trainingStartDateTime: String,
         val trainingEndDateTime: String,
-        val trainingStatus: String
+        val trainingStatus: String,
+        val sportPhotoUrl: String,
+        val sportName: String
 )
 

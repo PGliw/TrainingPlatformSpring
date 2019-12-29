@@ -255,7 +255,9 @@ fun TraineeTraining.toShortSummary(): TraineeTrainingShortSummary{
             trainerLastName = training.trainer.lastName,
             trainingStatus = training.status.name,
             trainingStartDateTime = training.startDateTime.toString(),
-            trainingEndDateTime = training.endDateTime.toString()
+            trainingEndDateTime = training.endDateTime.toString(),
+            sportPhotoUrl = training.sport.photoUrl,
+            sportName = training.sport.name
     )
 }
 
