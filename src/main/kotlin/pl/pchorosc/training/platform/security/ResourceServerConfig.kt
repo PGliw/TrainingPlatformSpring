@@ -25,6 +25,7 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
                 ?.antMatchers(HttpMethod.POST, "/trainers2")?.permitAll()
                 ?.antMatchers(HttpMethod.POST, "/trainees")?.permitAll()
                 ?.antMatchers(HttpMethod.POST, "/centres")?.permitAll()
+                ?.antMatchers(HttpMethod.POST, "/sports")?.permitAll()
                 ?.anyRequest()?.authenticated()
 
                 ?: throw Exception("ResourceServerConfig: http = null")

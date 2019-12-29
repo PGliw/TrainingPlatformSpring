@@ -29,9 +29,17 @@ class OfferNotFoundException : RuntimeException("No offer with given ID was foun
 class CentreNotFoundException : RuntimeException("No centre with given ID was found")
 
 @Component
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+class TrainingNotFoundException : RuntimeException("No training with given ID was found")
+
+@Component
 @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 class UnauthorizedException : RuntimeException("You are unauthorized")
 
 @Component
 @ResponseStatus(value = HttpStatus.CONFLICT)
 class ResourceAlreadyExistsException : RuntimeException("Resource already exists")
+
+@Component
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+class BadStatusValueException : RuntimeException("Bad status value")

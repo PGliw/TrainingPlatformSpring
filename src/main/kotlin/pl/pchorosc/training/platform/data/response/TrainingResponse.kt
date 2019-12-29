@@ -10,3 +10,21 @@ data class TrainingSummaryResponse(
         val traineesLimit: Int,
         val trainingStatus: String
 )
+
+data class TimeSlot(
+        val startDateTime: String,
+        val endDateTime: String
+)
+
+data class TraineeTrainingShortSummary(
+        val trainingID: Long,
+        val centreName: String,
+        val trainerFirstName: String,
+        val trainerLastName: String,
+        val trainingStartDateTime: String,
+        val trainingEndDateTime: String,
+        val trainingStatus: String,
+        val sportPhotoUrl: String,
+        val sportName: String
+)
+

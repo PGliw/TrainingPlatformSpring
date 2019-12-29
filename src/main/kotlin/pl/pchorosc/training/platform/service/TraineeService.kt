@@ -4,21 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import pl.pchorosc.training.platform.data.Trainee
 import pl.pchorosc.training.platform.data.TraineeTraining
 import pl.pchorosc.training.platform.data.dto.TraineeDTO
 import pl.pchorosc.training.platform.data.dto.TrainingDTO
 import pl.pchorosc.training.platform.data.response.TraineeResponse
+import pl.pchorosc.training.platform.data.response.TraineeTrainingShortSummary
 import pl.pchorosc.training.platform.data.response.TrainingSummaryResponse
 import pl.pchorosc.training.platform.exceptions.CentreNotFoundException
 import pl.pchorosc.training.platform.exceptions.SportNotFoundException
 import pl.pchorosc.training.platform.exceptions.TraineeNotFoundException
 import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
 import pl.pchorosc.training.platform.repository.*
-import pl.pchorosc.training.platform.utils.toTrainee
-import pl.pchorosc.training.platform.utils.toTraineeResponse
-import pl.pchorosc.training.platform.utils.toTraining
-import pl.pchorosc.training.platform.utils.toTrainingSummary
+import pl.pchorosc.training.platform.utils.*
 
 @Service("Trainee.kt service")
 class TraineeService {
@@ -47,10 +44,10 @@ class TraineeService {
     fun insertTrainee(traineeDTO: TraineeDTO) = traineeRepository.save(traineeDTO.toTrainee()).toTraineeResponse()
 
     @Transactional
-    fun insertTraineeTraining(trainingDTO: TrainingDTO) : TrainingSummaryResponse{
+    fun insertTraineeTraining(traineeID: Long, trainingDTO: TrainingDTO): TrainingSummaryResponse {
         val training = trainingDTO.toTraining()
         val trainer = trainerRepository.findByIdOrNull(trainingDTO.trainerID) ?: throw TrainerNotFoundException()
-        val trainee = traineeRepository.findByIdOrNull(trainingDTO.traineeID) ?: throw TraineeNotFoundException()
+        val trainee = traineeRepository.findByIdOrNull(traineeID) ?: throw TraineeNotFoundException()
         val centre = centreRepository.findByIdOrNull(trainingDTO.centreID) ?: throw CentreNotFoundException()
         val sport = sportRepository.findByIdOrNull(trainingDTO.sportID) ?: throw SportNotFoundException()
         training.trainer = trainer
@@ -64,8 +61,14 @@ class TraineeService {
         return training.toTrainingSummary()
     }
 
-    fun getTrainings(traineeID: Long): Iterable<TrainingSummaryResponse>{
+    fun getTrainings(traineeID: Long): Iterable<TrainingSummaryResponse> =
+            getTraineeTrainings(traineeID).map { it.training.toTrainingSummary() }
+
+    fun getTrainingsSummaries(traineeID: Long): Iterable<TraineeTrainingShortSummary> =
+            getTraineeTrainings(traineeID).map { it.toShortSummary() }
+
+    private fun getTraineeTrainings(traineeID: Long): Iterable<TraineeTraining> {
         val trainee = traineeRepository.findByIdOrNull(traineeID) ?: throw TraineeNotFoundException()
-        return trainee.traineeTrainings.map { it.training.toTrainingSummary() }
+        return trainee.traineeTrainings
     }
 }

@@ -36,6 +36,9 @@ class OpinionService {
     fun getOpinionsAboutTrainer(trainerID: Long): Iterable<OpinionResponse> =
             trainerOpinionRepository.findBySubjectId(trainerID).map { it.toOpinionResponse() }
 
+    fun getOpinionsGivenByTrainer(trainerID: Long): Iterable<OpinionResponse> =
+            traineeOpinionRepository.findByAuthorId(trainerID).map { it.toOpinionResponse() }
+
     fun insertOpinionAboutTrainer(opinionDTO: OpinionDTO): OpinionResponse {
         // TODO check if trainee have had a training with this trainer
         // TODO find and delete old opinion before inserting new one
@@ -49,6 +52,9 @@ class OpinionService {
 
     fun getOpinionsAboutTrainee(traineeID: Long): Iterable<OpinionResponse> =
             traineeOpinionRepository.findBySubjectId(traineeID).map { it.toOpinionResponse() }
+
+    fun getOpinionsGivenByTrainee(traineeID: Long): Iterable<OpinionResponse> =
+            trainerOpinionRepository.findByAuthorId(traineeID).map { it.toOpinionResponse() }
 
     fun insertOpinionAboutTrainee(opinionDTO: OpinionDTO): OpinionResponse {
         // TODO check if author is trainer and if they have had a training with the trainee
