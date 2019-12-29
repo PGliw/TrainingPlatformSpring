@@ -247,5 +247,17 @@ fun Trainer2.toDetails(): Trainer2DetailsResponse {
     )
 }
 
+fun TraineeTraining.toShortSummary(): TraineeTrainingShortSummary{
+    return TraineeTrainingShortSummary(
+            trainingID = training.id,
+            centreName = training.centre.name,
+            trainerFirstName = training.trainer.firstName,
+            trainerLastName = training.trainer.lastName,
+            trainingStatus = training.status.name,
+            trainingStartDateTime = training.startDateTime.toString(),
+            trainingEndDateTime = training.endDateTime.toString()
+    )
+}
+
 
 

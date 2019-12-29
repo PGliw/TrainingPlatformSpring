@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.dto.TrainingDTO
 import pl.pchorosc.training.platform.data.response.OpinionResponse
 import pl.pchorosc.training.platform.data.response.TraineeResponse
+import pl.pchorosc.training.platform.data.response.TraineeTrainingShortSummary
 import pl.pchorosc.training.platform.data.response.TrainingSummaryResponse
 import pl.pchorosc.training.platform.security.IIdentityManager
 import pl.pchorosc.training.platform.service.OpinionService
@@ -42,6 +43,12 @@ class TraineeUserController {
     fun getTrainings(): Iterable<TrainingSummaryResponse> {
         val traineeID = identityManager.currentUser.id
         return traineeService.getTrainings(traineeID)
+    }
+
+    @GetMapping(value = ["/trainings/summaries"])
+    fun getTrainingsShortSummaries(): Iterable<TraineeTrainingShortSummary> {
+        val traineeID = identityManager.currentUser.id
+        return traineeService.getTrainingsSummaries(traineeID)
     }
 
     @GetMapping(value = ["/opinions/received"])

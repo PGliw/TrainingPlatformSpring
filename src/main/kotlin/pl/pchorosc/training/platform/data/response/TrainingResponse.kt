@@ -16,3 +16,13 @@ data class TimeSlot(
         val endDateTime: String
 )
 
+data class TraineeTrainingShortSummary(
+        val trainingID: Long,
+        val centreName: String,
+        val trainerFirstName: String,
+        val trainerLastName: String,
+        val trainingStartDateTime: String,
+        val trainingEndDateTime: String,
+        val trainingStatus: String
+)
+
