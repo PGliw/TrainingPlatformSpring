@@ -7,14 +7,14 @@ import org.springframework.transaction.annotation.Transactional
 import pl.pchorosc.training.platform.data.Image
 import pl.pchorosc.training.platform.data.Trainer2
 import pl.pchorosc.training.platform.data.Training
+import pl.pchorosc.training.platform.data.TrainingStatus
 import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
-import pl.pchorosc.training.platform.data.response.CentreResponse
-import pl.pchorosc.training.platform.data.response.SummaryResponse
-import pl.pchorosc.training.platform.data.response.TimeSlot
-import pl.pchorosc.training.platform.data.response.Trainer2Response
+import pl.pchorosc.training.platform.data.response.*
+import pl.pchorosc.training.platform.exceptions.BadStatusValueException
 import pl.pchorosc.training.platform.exceptions.CentreNotFoundException
 import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
+import pl.pchorosc.training.platform.exceptions.TrainingNotFoundException
 import pl.pchorosc.training.platform.repository.CentreRepository
 import pl.pchorosc.training.platform.repository.ImageRepository
 import pl.pchorosc.training.platform.repository.Trainer2Repository
@@ -45,17 +45,21 @@ class Trainer2Service {
 
     fun getTrainingsSummaries(trainerID: Long) = getTrainerTrainings(trainerID).map { it.toTrainingSummary() }
 
-    fun getTrainerCentres(id: Long) = trainer2Repository.findByIdOrNull(id)?.centres?.map { it.toCentreResponse() } ?: throw TrainerNotFoundException()
+    fun getTrainerCentres(id: Long) = trainer2Repository.findByIdOrNull(id)?.centres?.map { it.toCentreResponse() }
+            ?: throw TrainerNotFoundException()
 
-    fun getTrainerOffers(id: Long) = trainer2Repository.findByIdOrNull(id)?.offers?.map { it.toOfferResponse() } ?: throw TrainerNotFoundException()
+    fun getTrainerOffers(id: Long) = trainer2Repository.findByIdOrNull(id)?.offers?.map { it.toOfferResponse() }
+            ?: throw TrainerNotFoundException()
 
     fun getTrainerUpcomingTrainings(id: Long) = trainer2Repository.findByIdOrNull(id)?.trainings?.filter {
         it.startDateTime >= LocalDateTime.now() // TODO consider using frontend localDateTime
     }?.map { it.toTrainingSummary() } ?: throw  TrainerNotFoundException()
 
-    fun getTrainerImages(id: Long) = trainer2Repository.findByIdOrNull(id)?.images?.map { it.url } ?: throw TrainerNotFoundException()
+    fun getTrainerImages(id: Long) = trainer2Repository.findByIdOrNull(id)?.images?.map { it.url }
+            ?: throw TrainerNotFoundException()
 
-    fun getTrainerDetails(id: Long) = trainer2Repository.findByIdOrNull(id)?.toDetails() ?: throw  TrainerNotFoundException()
+    fun getTrainerDetails(id: Long) = trainer2Repository.findByIdOrNull(id)?.toDetails()
+            ?: throw  TrainerNotFoundException()
 
     fun getTrainer(id: Long): Trainer2Response =
             trainer2Repository.findByIdOrNull(id)?.toTrainer2Response() ?: throw TrainerNotFoundException()
@@ -66,11 +70,11 @@ class Trainer2Service {
 
     @Transactional
     fun assignCentresToTrainer(trainerID: Long,
-                       trainer2CentresDTO: Trainer2CentresDTO): Iterable<CentreResponse>{
+                               trainer2CentresDTO: Trainer2CentresDTO): Iterable<CentreResponse> {
         val trainer = trainer2Repository.findByIdOrNull(trainerID) ?: throw TrainerNotFoundException()
         val trainerCentresIDs = trainer.centres.map { it.id }
-        for( centreID in trainer2CentresDTO.centresIDs){
-            if(centreID !in trainerCentresIDs) {
+        for (centreID in trainer2CentresDTO.centresIDs) {
+            if (centreID !in trainerCentresIDs) {
                 val centre = centreRepository.findByIdOrNull(centreID) ?: throw CentreNotFoundException()
                 centre.trainers.add(trainer)
                 trainer.centres.add(centre)
@@ -81,11 +85,11 @@ class Trainer2Service {
 
     @Transactional
     fun insertTrainerImages(trainerID: Long,
-                            imagesUrls: List<String>): Iterable<String>{
+                            imagesUrls: List<String>): Iterable<String> {
         val trainer = trainer2Repository.findByIdOrNull(trainerID) ?: throw TrainerNotFoundException()
         val trainerImagesUrls = trainer.images.map { it.url }
-        for (imageUrl in imagesUrls){
-            if(imageUrl !in trainerImagesUrls){
+        for (imageUrl in imagesUrls) {
+            if (imageUrl !in trainerImagesUrls) {
                 val image = imageRepository.save(Image(imageUrl))
                 trainer.images.add(image) // TODO throw exception if image url already exists?
             }
@@ -93,7 +97,20 @@ class Trainer2Service {
         return trainer.images.map { it.url }
     }
 
-    private fun getTrainerTrainings(trainerID: Long): Iterable<Training>{
+    @Transactional
+    fun updateTrainingStatus(trainerID: Long, trainingID: Long, newStatusString: String) : TrainingSummaryResponse{
+        val newStatus = try {
+            TrainingStatus.valueOf(newStatusString)
+        } catch (e: IllegalArgumentException) {
+            throw BadStatusValueException()
+        }
+        val trainings = getTrainerTrainings(trainerID)
+        val matchingTraining = trainings.findLast { it.id == trainingID } ?: throw TrainingNotFoundException()
+        matchingTraining.status = newStatus
+        return matchingTraining.toTrainingSummary()
+    }
+
+    private fun getTrainerTrainings(trainerID: Long): Iterable<Training> {
         val trainer = trainer2Repository.findByIdOrNull(trainerID) ?: throw TrainerNotFoundException()
         return trainer.trainings
     }
@@ -108,16 +125,16 @@ class Trainer2Service {
     }
 
     // TODO implement this method and check whether the slot is not already occupied
-    private fun genTimeSlots(daysCount: Int, dayStartHour: Int, dayEndHour: Int, lengthInHours: Int): List<TimeSlot>{
+    private fun genTimeSlots(daysCount: Int, dayStartHour: Int, dayEndHour: Int, lengthInHours: Int): List<TimeSlot> {
         val startHours = (dayStartHour until dayEndHour step lengthInHours).toList()
         val endHours = ((dayStartHour + lengthInHours)..dayEndHour step lengthInHours).toList()
         val startEndHours = startHours.zip(endHours)
-        val initialDateTime = when{
+        val initialDateTime = when {
             startHours.last() >= LocalDateTime.now().hour -> LocalDateTime.now().plusDays(1)
             else -> LocalDateTime.now()
         }
         val timeSlots = mutableListOf<TimeSlot>()
-        for(dayShift in 0..daysCount) {
+        for (dayShift in 0..daysCount) {
             for (startEndHour in startEndHours) {
                 if (initialDateTime.hour > startEndHour.first) {
                     //val
