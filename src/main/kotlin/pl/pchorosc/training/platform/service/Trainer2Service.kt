@@ -5,11 +5,13 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pl.pchorosc.training.platform.data.Image
+import pl.pchorosc.training.platform.data.Trainer2
 import pl.pchorosc.training.platform.data.Training
 import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
 import pl.pchorosc.training.platform.data.response.CentreResponse
 import pl.pchorosc.training.platform.data.response.SummaryResponse
+import pl.pchorosc.training.platform.data.response.TimeSlot
 import pl.pchorosc.training.platform.data.response.Trainer2Response
 import pl.pchorosc.training.platform.exceptions.CentreNotFoundException
 import pl.pchorosc.training.platform.exceptions.TrainerNotFoundException
@@ -17,6 +19,7 @@ import pl.pchorosc.training.platform.repository.CentreRepository
 import pl.pchorosc.training.platform.repository.ImageRepository
 import pl.pchorosc.training.platform.repository.Trainer2Repository
 import pl.pchorosc.training.platform.utils.*
+import java.time.LocalDateTime
 
 @Service("Trainer2.kt service")
 class Trainer2Service {
@@ -32,12 +35,11 @@ class Trainer2Service {
 
     fun getTrainers(
             sportID: Long? = null, centreID: Long? = null
-    ): Iterable<Trainer2Response> = when {
-        centreID != null && sportID != null -> trainer2Repository.findByCentresIdAndOffersSportId(centreID, sportID)
-        centreID != null -> trainer2Repository.findByCentresId(centreID)
-        sportID != null -> trainer2Repository.findByOffersSportId(sportID)
-        else -> trainer2Repository.findAll()
-    }.map { it.toTrainer2Response() }
+    ) = getTrainersBySportAndCentre(sportID, centreID).map { it.toTrainer2Response() }
+
+    fun getTrainersOverviews(
+            sportID: Long? = null, centreID: Long? = null
+    ) = getTrainersBySportAndCentre(sportID, centreID).map { it.toOverview() }
 
     fun getTrainersSummaries(): Iterable<SummaryResponse> = trainer2Repository.findAll().map { it.toSummary() }
 
@@ -47,7 +49,13 @@ class Trainer2Service {
 
     fun getTrainerOffers(id: Long) = trainer2Repository.findByIdOrNull(id)?.offers?.map { it.toOfferResponse() } ?: throw TrainerNotFoundException()
 
+    fun getTrainerUpcomingTrainings(id: Long) = trainer2Repository.findByIdOrNull(id)?.trainings?.filter {
+        it.startDateTime >= LocalDateTime.now() // TODO consider using frontend localDateTime
+    }?.map { it.toTrainingSummary() } ?: throw  TrainerNotFoundException()
+
     fun getTrainerImages(id: Long) = trainer2Repository.findByIdOrNull(id)?.images?.map { it.url } ?: throw TrainerNotFoundException()
+
+    fun getTrainerDetails(id: Long) = trainer2Repository.findByIdOrNull(id)?.toDetails() ?: throw  TrainerNotFoundException()
 
     fun getTrainer(id: Long): Trainer2Response =
             trainer2Repository.findByIdOrNull(id)?.toTrainer2Response() ?: throw TrainerNotFoundException()
@@ -89,4 +97,34 @@ class Trainer2Service {
         val trainer = trainer2Repository.findByIdOrNull(trainerID) ?: throw TrainerNotFoundException()
         return trainer.trainings
     }
+
+    private fun getTrainersBySportAndCentre(
+            sportID: Long? = null, centreID: Long? = null
+    ): Iterable<Trainer2> = when {
+        centreID != null && sportID != null -> trainer2Repository.findByCentresIdAndOffersSportId(centreID, sportID)
+        centreID != null -> trainer2Repository.findByCentresId(centreID)
+        sportID != null -> trainer2Repository.findByOffersSportId(sportID)
+        else -> trainer2Repository.findAll()
+    }
+
+    // TODO implement this method and check whether the slot is not already occupied
+    private fun genTimeSlots(daysCount: Int, dayStartHour: Int, dayEndHour: Int, lengthInHours: Int): List<TimeSlot>{
+        val startHours = (dayStartHour until dayEndHour step lengthInHours).toList()
+        val endHours = ((dayStartHour + lengthInHours)..dayEndHour step lengthInHours).toList()
+        val startEndHours = startHours.zip(endHours)
+        val initialDateTime = when{
+            startHours.last() >= LocalDateTime.now().hour -> LocalDateTime.now().plusDays(1)
+            else -> LocalDateTime.now()
+        }
+        val timeSlots = mutableListOf<TimeSlot>()
+        for(dayShift in 0..daysCount) {
+            for (startEndHour in startEndHours) {
+                if (initialDateTime.hour > startEndHour.first) {
+                    //val
+                }
+            }
+        }
+        return listOf()
+    }
+
 }

@@ -10,3 +10,9 @@ data class TrainingSummaryResponse(
         val traineesLimit: Int,
         val trainingStatus: String
 )
+
+data class TimeSlot(
+        val startDateTime: String,
+        val endDateTime: String
+)
+

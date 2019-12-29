@@ -209,4 +209,43 @@ fun Training.isOverlapping(another: Training): Boolean {
             )
 }
 
+private val Trainer2.prices: List<Float>
+    get() = offers.map { it.pricePerHour }
+
+private val Trainer2.mean: Float?
+    get() {
+        val opinionsCount = receivedOpinions.size
+        return if (opinionsCount == 0) null else receivedOpinions.map { it.grade }.sum().toFloat() / opinionsCount
+    }
+
+fun Trainer2.toOverview(): Trainer2OverviewResponse {
+    return Trainer2OverviewResponse(
+            id = id,
+            firstName = firstName,
+            lastName = lastName,
+            photoUrl = photoUrl,
+            meanGrade = mean,
+            opinionsCount = receivedOpinions.size,
+            minPrice = prices.min(),
+            maxPrice = prices.max(),
+            sports = offers.map { it.sport.name }
+    )
+}
+
+fun Trainer2.toDetails(): Trainer2DetailsResponse {
+    return Trainer2DetailsResponse(
+            id = id,
+            firstName = firstName,
+            lastName = lastName,
+            photoUrl = photoUrl,
+            meanGrade = mean,
+            opinionsCount = receivedOpinions.size,
+            description = description,
+            age = LocalDateTime.now().year - birthday.year,
+            imagesUrls = images.map { it.url },
+            offers = offers.map { it.toOfferResponse() }
+    )
+}
+
+
 
