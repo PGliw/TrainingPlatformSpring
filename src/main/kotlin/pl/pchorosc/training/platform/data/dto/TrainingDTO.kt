@@ -10,8 +10,7 @@ data class TrainingDTO(
         val traineeLimit: Int,
         val sportID: Long,
         val centreID: Long,
-        val trainerID: Long,
-        val traineeID: Long
+        val trainerID: Long
 ) {
     val status = TrainingStatus.PROPOSED
 }

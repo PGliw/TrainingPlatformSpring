@@ -47,10 +47,10 @@ class TraineeService {
     fun insertTrainee(traineeDTO: TraineeDTO) = traineeRepository.save(traineeDTO.toTrainee()).toTraineeResponse()
 
     @Transactional
-    fun insertTraineeTraining(trainingDTO: TrainingDTO) : TrainingSummaryResponse{
+    fun insertTraineeTraining(traineeID: Long, trainingDTO: TrainingDTO) : TrainingSummaryResponse{
         val training = trainingDTO.toTraining()
         val trainer = trainerRepository.findByIdOrNull(trainingDTO.trainerID) ?: throw TrainerNotFoundException()
-        val trainee = traineeRepository.findByIdOrNull(trainingDTO.traineeID) ?: throw TraineeNotFoundException()
+        val trainee = traineeRepository.findByIdOrNull(traineeID) ?: throw TraineeNotFoundException()
         val centre = centreRepository.findByIdOrNull(trainingDTO.centreID) ?: throw CentreNotFoundException()
         val sport = sportRepository.findByIdOrNull(trainingDTO.sportID) ?: throw SportNotFoundException()
         training.trainer = trainer

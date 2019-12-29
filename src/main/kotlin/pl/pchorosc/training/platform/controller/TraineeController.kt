@@ -28,15 +28,17 @@ class TraineeController {
     fun addTrainee(@RequestBody traineeDTO: TraineeDTO) = traineeService.insertTrainee(traineeDTO)
 
     @PostMapping(value = ["/{id}/trainings"])
-    fun addTraining(@RequestBody trainingDTO: TrainingDTO) = traineeService.insertTraineeTraining(trainingDTO)
+    fun addTraining(@PathVariable id: Long, @RequestBody trainingDTO: TrainingDTO) =
+            traineeService.insertTraineeTraining(id, trainingDTO)
 
     @GetMapping(value = ["/{id}/trainings"])
     fun getTrainings(@PathVariable id: Long) = traineeService.getTrainings(id)
 
     @GetMapping(value = ["/{id}/opinions"])
-    fun getTrainerOpinions(@PathVariable id: Long) = opinionService.getOpinionsAboutTrainee(id)
+    fun getTraineeOpinions(@PathVariable id: Long) = opinionService.getOpinionsAboutTrainee(id)
 
     @PostMapping(value = ["/{id}/opinions"])
-    fun addTrainerOpinions(@RequestBody opinionDTO: OpinionDTO) = opinionService.insertOpinionAboutTrainee(opinionDTO)
+    fun addTraineeOpinions(@RequestBody opinionDTO: OpinionDTO) = opinionService.insertOpinionAboutTrainee(opinionDTO)
 
 }
+

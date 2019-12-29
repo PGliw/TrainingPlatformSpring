@@ -35,11 +35,13 @@ interface OfferRepository : CrudRepository<Offer, Long>
 interface SportRepository : CrudRepository<Sport, Long>
 
 interface TrainerOpinionRepository : CrudRepository<OpinionTraineeAboutTrainer, Long>{
-    fun findBySubjectId(subjectId: Long) : Iterable<OpinionTraineeAboutTrainer>
+    fun findBySubjectId(subjectId: Long) : Iterable<OpinionTraineeAboutTrainer> // subject is Trainee
+    fun findByAuthorId(authorId: Long) : Iterable<OpinionTraineeAboutTrainer> // author is Trainee
 }
 
 interface TraineeOpinionRepository : CrudRepository<OpinionTrainerAboutTrainee, Long>{
-    fun findBySubjectId(subjectId: Long) : Iterable<OpinionTrainerAboutTrainee>
+    fun findBySubjectId(subjectId: Long) : Iterable<OpinionTrainerAboutTrainee> // subject is Trainer
+    fun findByAuthorId(authorId: Long): Iterable<OpinionTrainerAboutTrainee> // author is Trainer
 }
 
 interface PassRepository : CrudRepository<Pass, Long>
