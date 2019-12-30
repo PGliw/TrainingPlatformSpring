@@ -190,12 +190,36 @@ fun Training.toTrainingSummary() = TrainingSummaryResponse(
         photoUrl = centre.photoUrl,
         numberOfTrainees = trainingTrainees.size,
         traineesLimit = traineeLimit,
-        trainingStatus = status.name
+        trainingStatus = status.name,
+        sportName = sport.name
+)
+
+
+fun Training.toTrainingDetails() = TrainingDetailsResponse(
+        trainingID = id,
+        startDateTime = startDateTime.toString(),
+        endDateTime = endDateTime.toString(),
+        centreName = centre.name,
+        centrePhotoUrl = centre.photoUrl,
+        centreID = centre.id,
+        centreLatitude = centre.latitude,
+        centreLongitude = centre.longitude,
+        numberOfTrainees = trainingTrainees.size,
+        traineesLimit = traineeLimit,
+        trainingStatus = status.name,
+        sportName = sport.name,
+        traineesSummaries = trainingTrainees.map { it.trainee.toSummary() }
+)
+
+fun Trainee.toSummary() = SummaryResponse(
+        id = id,
+        imageUrl = photoUrl,
+        title = firstName
 )
 
 fun TrainingDTO.toTraining() = Training(
         startDateTime = LocalDateTime.parse(startDateTime),
-        endDateTime = LocalDateTime.parse(startDateTime),
+        endDateTime = LocalDateTime.parse(endDateTime),
         traineeLimit = traineeLimit,
         status = status
 )

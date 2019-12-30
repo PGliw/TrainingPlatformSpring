@@ -8,7 +8,8 @@ data class TrainingSummaryResponse(
         val photoUrl: String,
         val numberOfTrainees: Int,
         val traineesLimit: Int,
-        val trainingStatus: String
+        val trainingStatus: String,
+        val sportName: String
 )
 
 data class TimeSlot(
@@ -26,5 +27,21 @@ data class TraineeTrainingShortSummary(
         val trainingStatus: String,
         val sportPhotoUrl: String,
         val sportName: String
+)
+
+data class TrainingDetailsResponse(
+        val trainingID: Long,
+        val startDateTime: String,
+        val endDateTime: String,
+        val centreID: Long,
+        val centreName: String,
+        val centrePhotoUrl: String,
+        val centreLatitude: Float,
+        val centreLongitude: Float,
+        val numberOfTrainees: Int,
+        val traineesLimit: Int,
+        val trainingStatus: String,
+        val sportName: String,
+        val traineesSummaries: List<SummaryResponse>
 )
 

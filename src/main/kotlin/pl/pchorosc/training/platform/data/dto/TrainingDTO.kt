@@ -14,3 +14,7 @@ data class TrainingDTO(
 ) {
     val status = TrainingStatus.PROPOSED
 }
+
+data class TrainingStatusDTO(
+        val status: String
+)
