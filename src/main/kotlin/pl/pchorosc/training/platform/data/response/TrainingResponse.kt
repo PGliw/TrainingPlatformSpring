@@ -29,3 +29,16 @@ data class TraineeTrainingShortSummary(
         val sportName: String
 )
 
+data class TrainingDetailsResponse(
+        val trainingID: Long,
+        val startDateTime: String,
+        val endDateTime: String,
+        val centreName: String,
+        val centrePhotoUrl: String,
+        val numberOfTrainees: Int,
+        val traineesLimit: Int,
+        val trainingStatus: String,
+        val sportName: String,
+        val traineesSummaries: List<SummaryResponse>
+)
+

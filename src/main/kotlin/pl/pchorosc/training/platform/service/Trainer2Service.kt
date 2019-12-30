@@ -52,6 +52,12 @@ class Trainer2Service {
         }.map { it.toTrainingSummary() }
     }
 
+    @Transactional
+    fun getTrainingDetails(trainerID: Long, trainingID: Long): TrainingDetailsResponse {
+        val trainings = getTrainerTrainings(trainerID)
+        return trainings.find { it.id == trainingID }?.toTrainingDetails() ?: throw TrainingNotFoundException()
+    }
+
     fun getTrainerCentres(id: Long) = trainer2Repository.findByIdOrNull(id)?.centres?.map { it.toCentreResponse() }
             ?: throw TrainerNotFoundException()
 

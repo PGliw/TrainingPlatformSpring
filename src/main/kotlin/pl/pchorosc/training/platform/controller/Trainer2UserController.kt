@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.*
 import pl.pchorosc.training.platform.data.response.OpinionResponse
 import pl.pchorosc.training.platform.data.response.Trainer2Response
+import pl.pchorosc.training.platform.data.response.TrainingDetailsResponse
 import pl.pchorosc.training.platform.data.response.TrainingSummaryResponse
 import pl.pchorosc.training.platform.security.IIdentityManager
 import pl.pchorosc.training.platform.service.OpinionService
@@ -66,5 +67,13 @@ class Trainer2UserController {
     ): TrainingSummaryResponse {
         val trainerID = identityManager.currentUser.id
         return trainerService.updateTrainingStatus(trainerID = trainerID, trainingID = id, newStatusString = status)
+    }
+
+    @GetMapping(value = ["/trainings/{id}/details"])
+    fun getTrainingDetails(
+            @PathVariable id: Long
+    ): TrainingDetailsResponse {
+        val trainerID = identityManager.currentUser.id
+        return trainerService.getTrainingDetails(trainerID, id)
     }
 }
