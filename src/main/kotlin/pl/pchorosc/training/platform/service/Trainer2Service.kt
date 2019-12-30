@@ -10,6 +10,7 @@ import pl.pchorosc.training.platform.data.Training
 import pl.pchorosc.training.platform.data.TrainingStatus
 import pl.pchorosc.training.platform.data.dto.Trainer2CentresDTO
 import pl.pchorosc.training.platform.data.dto.Trainer2DTO
+import pl.pchorosc.training.platform.data.dto.TrainingStatusDTO
 import pl.pchorosc.training.platform.data.response.*
 import pl.pchorosc.training.platform.exceptions.BadStatusValueException
 import pl.pchorosc.training.platform.exceptions.CentreNotFoundException
@@ -119,9 +120,9 @@ class Trainer2Service {
     }
 
     @Transactional
-    fun updateTrainingStatus(trainerID: Long, trainingID: Long, newStatusString: String): TrainingSummaryResponse {
+    fun updateTrainingStatus(trainerID: Long, trainingID: Long, trainingStatusDTO: TrainingStatusDTO): TrainingSummaryResponse {
         val newStatus = try {
-            TrainingStatus.valueOf(newStatusString)
+            TrainingStatus.valueOf(trainingStatusDTO.status)
         } catch (e: IllegalArgumentException) {
             throw BadStatusValueException()
         }
