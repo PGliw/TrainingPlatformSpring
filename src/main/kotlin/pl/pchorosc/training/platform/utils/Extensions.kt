@@ -196,7 +196,7 @@ fun Training.toTrainingSummary() = TrainingSummaryResponse(
 
 fun TrainingDTO.toTraining() = Training(
         startDateTime = LocalDateTime.parse(startDateTime),
-        endDateTime = LocalDateTime.parse(startDateTime),
+        endDateTime = LocalDateTime.parse(endDateTime),
         traineeLimit = traineeLimit,
         status = status
 )
