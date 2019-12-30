@@ -33,9 +33,11 @@ class Trainer2UserController {
 
 
     @GetMapping(value = ["/trainings"])
-    fun getTrainings(): Iterable<TrainingSummaryResponse> {
+    fun getTrainings(
+            @RequestParam status: String?
+    ): Iterable<TrainingSummaryResponse> {
         val trainerID = identityManager.currentUser.id
-        return trainerService.getTrainingsSummaries(trainerID)
+        return trainerService.getTrainingsSummaries(trainerID, status)
     }
 
     // TODO short summaries?

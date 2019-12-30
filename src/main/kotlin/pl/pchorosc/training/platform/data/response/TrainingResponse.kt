@@ -8,7 +8,8 @@ data class TrainingSummaryResponse(
         val photoUrl: String,
         val numberOfTrainees: Int,
         val traineesLimit: Int,
-        val trainingStatus: String
+        val trainingStatus: String,
+        val sportName: String
 )
 
 data class TimeSlot(

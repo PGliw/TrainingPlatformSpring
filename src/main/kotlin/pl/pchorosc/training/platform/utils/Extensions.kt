@@ -190,7 +190,8 @@ fun Training.toTrainingSummary() = TrainingSummaryResponse(
         photoUrl = centre.photoUrl,
         numberOfTrainees = trainingTrainees.size,
         traineesLimit = traineeLimit,
-        trainingStatus = status.name
+        trainingStatus = status.name,
+        sportName = sport.name
 )
 
 fun TrainingDTO.toTraining() = Training(

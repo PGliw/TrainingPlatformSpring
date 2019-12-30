@@ -43,7 +43,14 @@ class Trainer2Service {
 
     fun getTrainersSummaries(): Iterable<SummaryResponse> = trainer2Repository.findAll().map { it.toSummary() }
 
-    fun getTrainingsSummaries(trainerID: Long) = getTrainerTrainings(trainerID).map { it.toTrainingSummary() }
+    @Transactional
+    fun getTrainingsSummaries(trainerID: Long, status: String? = null): Iterable<TrainingSummaryResponse> {
+        val trainings = getTrainerTrainings(trainerID)
+        return when (status) {
+            null -> trainings
+            else -> trainings.filter { it.status.name == status }
+        }.map { it.toTrainingSummary() }
+    }
 
     fun getTrainerCentres(id: Long) = trainer2Repository.findByIdOrNull(id)?.centres?.map { it.toCentreResponse() }
             ?: throw TrainerNotFoundException()
@@ -51,9 +58,17 @@ class Trainer2Service {
     fun getTrainerOffers(id: Long) = trainer2Repository.findByIdOrNull(id)?.offers?.map { it.toOfferResponse() }
             ?: throw TrainerNotFoundException()
 
-    fun getTrainerUpcomingTrainings(id: Long) = trainer2Repository.findByIdOrNull(id)?.trainings?.filter {
-        it.startDateTime >= LocalDateTime.now() // TODO consider using frontend localDateTime
-    }?.map { it.toTrainingSummary() } ?: throw  TrainerNotFoundException()
+    @Transactional
+    fun getTrainerUpcomingTrainings(id: Long, status: String? = null): Iterable<TrainingSummaryResponse> {
+        val upcomingTrainings = getTrainerTrainings(id).filter {
+            it.startDateTime >= LocalDateTime.now() // TODO consider using frontend localDateTime
+        }
+        val response = when (status) {
+            null -> upcomingTrainings
+            else -> upcomingTrainings.filter { it.status.name == status }
+        }
+        return response.map { it.toTrainingSummary() }
+    }
 
     fun getTrainerImages(id: Long) = trainer2Repository.findByIdOrNull(id)?.images?.map { it.url }
             ?: throw TrainerNotFoundException()
@@ -98,7 +113,7 @@ class Trainer2Service {
     }
 
     @Transactional
-    fun updateTrainingStatus(trainerID: Long, trainingID: Long, newStatusString: String) : TrainingSummaryResponse{
+    fun updateTrainingStatus(trainerID: Long, trainingID: Long, newStatusString: String): TrainingSummaryResponse {
         val newStatus = try {
             TrainingStatus.valueOf(newStatusString)
         } catch (e: IllegalArgumentException) {
